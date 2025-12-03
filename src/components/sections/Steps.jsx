@@ -5,19 +5,17 @@ const Steps = () => {
     return (
         <section className="w-full py-20 bg-white">
             <div className="max-w-4xl mx-auto text-center">
-                <p className="text-blue-500 font-semibold tracking-wide">4 EASY STEPS</p>
-                <h2 className="text-4xl font-bold text-gray-900 mt-1">
+                <p className="text-blue-500 font-semibold tracking-wide text-sm">4 EASY STEPS</p>
+                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                     How HomeLight Simple Sale Works
                 </h2>
-                <p className="text-gray-500 mt-3">
+                <p className="text-gray-500 mt-3 text-sm">
                     Compare the top real estate agents and the largest investor network to get the best
                     price and close fast.
                 </p>
             </div>
 
-            <div className="mt-20 relative max-w-3xl mx-auto">
-                {/* Vertical Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-blue-200"></div>
+            <div className="mt-10 relative max-w-3xl mx-auto">
 
                 {/* Step 1 */}
                 <StepItem

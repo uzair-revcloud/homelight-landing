@@ -16,13 +16,7 @@
 @import "tailwindcss";
 
 a {
-  font-weight: 500;
-  color: #646cff;
   text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
 }
 
 body {
@@ -30,7 +24,7 @@ body {
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  padding-left: 3.5rem;
+  padding-inline: 5rem;
 }
 
 h1 {
