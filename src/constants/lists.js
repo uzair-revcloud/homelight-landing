@@ -30,3 +30,66 @@ export const FAQS_LIST = [
             "No, you are not obligated to accept any Simple Sale offer you receive.",
     },
 ];
+
+export const properties = [
+    {
+        id: 1,
+        price: '$1,299,000',
+        address: '6508 Mira Vista Lane San Diego, CA',
+        beds: 3,
+        baths: 2,
+        sqft: 1753,
+        daysSold: 5,
+        image: '/property_image.webp'
+    },
+    {
+        id: 2,
+        price: '$1,699,000',
+        address: '1210 Anita Pl Fullerton, CA',
+        beds: 4,
+        baths: 3,
+        sqft: 2856,
+        daysSold: 4,
+        image: '/property_image.webp'
+    },
+    {
+        id: 3,
+        price: '$599,999',
+        address: '6913 Basswood Place Rancho Cucamonga, CA',
+        beds: 3,
+        baths: 2,
+        sqft: 1280,
+        daysSold: 12,
+        image: '/property_image.webp'
+    },
+    {
+        id: 4,
+        price: '$2,150,000',
+        address: '4521 Ocean View Dr Los Angeles, CA',
+        beds: 5,
+        baths: 4,
+        sqft: 3200,
+        daysSold: 3,
+        image: '/property_image.webp'
+    },
+    {
+        id: 5,
+        price: '$875,000',
+        address: '2341 Maple Street Sacramento, CA',
+        beds: 3,
+        baths: 2,
+        sqft: 1650,
+        daysSold: 7,
+        image: '/property_image.webp'
+    },
+    {
+        id: 6,
+        price: '$1,299,000',
+        address: '6508 Mira Vista Lane San Diego, CA',
+        beds: 5,
+        baths: 4,
+        sqft: 2856,
+        daysSold: 1,
+        image: '/property_image.webp'
+    },
+];

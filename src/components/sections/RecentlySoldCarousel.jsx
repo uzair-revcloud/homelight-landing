@@ -1,0 +1,31 @@
+import React from 'react';
+import Carousel from '../ui/Carousel';
+import PropertyCard from '../ui/PropertyCard';
+import { properties } from '../../constants/lists';
+
+const RecentlySoldCarousel = () => {
+
+
+    return (
+        <Carousel title={
+            <>
+                Recently Sold with Simple Sale<sup className="text-2xl">®</sup>
+            </>
+        }>
+            {properties.map((property) => (
+                <PropertyCard
+                    key={property.id}
+                    price={property.price}
+                    address={property.address}
+                    beds={property.beds}
+                    baths={property.baths}
+                    sqft={property.sqft}
+                    daysSold={property.daysSold}
+                    image={property.image}
+                />
+            ))}
+        </Carousel>
+    );
+};
+
+export default RecentlySoldCarousel;
