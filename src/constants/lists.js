@@ -93,3 +93,13 @@ export const properties = [
         image: '/property_image.webp'
     },
 ];
+
+export const rows = [
+    { label: "Cash offer within a week", traditional: false, simpleSale: true },
+    { label: "No repairs or updates", traditional: false, simpleSale: true },
+    { label: "No listing or showings", traditional: false, simpleSale: true },
+    { label: "No offer negotiation or buyer demands", traditional: false, simpleSale: true },
+    { label: "No home sale contingency on next home purchase", traditional: false, simpleSale: true },
+    { label: "No expensive double mortgage, bridge loan, or interim housing", traditional: false, simpleSale: true },
+    { label: "Close in as little as 10 days", traditional: false, simpleSale: true },
+];

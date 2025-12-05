@@ -31,7 +31,7 @@ const HeroSection = () => {
                         className="w-full max-w-2xl" />
                 </div>
             </section>
-            <div className="bg-[#0288D1] text-white -ml-[10vw] -mr-[10vw] px-50 py-5 text-sm font-medium font-sans">
+            <div className="bg-[#0288D1] text-white -ml-[10vw] pl-50 py-5 text-sm font-medium font-sans">
                 We have Cash Buyers in your area. Enter your address to get started.
             </div>
         </>

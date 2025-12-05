@@ -25,6 +25,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   padding-inline: 5rem;
+  overflow-x: hidden;
 }
 
 h1 {
