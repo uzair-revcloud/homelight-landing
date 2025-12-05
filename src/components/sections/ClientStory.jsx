@@ -1,13 +1,14 @@
 import React from "react";
 import { strings } from "../../constants/strings";
 
-export default function ClientStory({
-    videoUrl,
-    imageUrl,
-    quote,
-    name,
-    role
-}) {
+export default function ClientStory() {
+    const data = {
+        imageUrl: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/images/productsLandingPages/simpleSale/testimonial-bao-w-cf59538fe38458d19d69fbb2ec5f3bb7.webp",
+        videoUrl: "https://player.vimeo.com/video/123456789",
+        quote: strings.client_story_quote,
+        name: strings.client_story_name,
+        role: strings.client_story_role
+    }
     return (
         <section className="py-20 bg-white">
             <div className="text-center mb-12">
@@ -23,15 +24,15 @@ export default function ClientStory({
 
                 {/* LEFT — Video or Image */}
                 <div className="rounded-2xl overflow-hidden shadow-lg">
-                    {imageUrl ? (
+                    {data.imageUrl ? (
                         <img
-                            src={imageUrl}
-                            alt={name}
+                            src={data.imageUrl}
+                            alt={data.name}
                             className="w-full h-80 md:h-[380px] object-cover"
                         />
                     ) : (
                         <iframe
-                            src={videoUrl}
+                            src={data.videoUrl}
                             className="w-full h-80 md:h-[380px]"
                             frameBorder="0"
                             allow="autoplay; fullscreen"
@@ -43,12 +44,12 @@ export default function ClientStory({
                 {/* RIGHT — Quote + Client Info */}
                 <div className="ml-24 max-w-full -mr-24">
                     <p className="text-[24px] text-gray-700 font-semibold leading-[1.2] tracking-[0.8px]">
-                        "{quote}"
+                        "{data.quote}"
                     </p>
 
                     <div className="mt-12">
-                        <p className="font-semibold text-gray-900 text-lg">{name}</p>
-                        <p className="text-gray-500 text-sm mt-1">{role}</p>
+                        <p className="font-semibold text-gray-900 text-lg">{data.name}</p>
+                        <p className="text-gray-500 text-sm mt-1">{data.role}</p>
                     </div>
                 </div>
 

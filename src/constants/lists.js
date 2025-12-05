@@ -31,7 +31,7 @@ export const FAQS_LIST = [
     },
 ];
 
-export const properties = [
+export const PROPERTIES_LIST = [
     {
         id: 1,
         price: '$1,299,000',
@@ -94,7 +94,7 @@ export const properties = [
     },
 ];
 
-export const rows = [
+export const TABLE_ROWS = [
     { label: "Cash offer within a week", traditional: false, simpleSale: true },
     { label: "No repairs or updates", traditional: false, simpleSale: true },
     { label: "No listing or showings", traditional: false, simpleSale: true },
@@ -103,3 +103,36 @@ export const rows = [
     { label: "No expensive double mortgage, bridge loan, or interim housing", traditional: false, simpleSale: true },
     { label: "Close in as little as 10 days", traditional: false, simpleSale: true },
 ];
+
+export const FEATURES_LIST = [
+    {
+        icon: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/components/icons/purchase-price-772382e79d22664be34b77438a5fcc1a.png",
+        title: "Get our best offer",
+        description:
+            "We use neighborhood data and local market experts to present the best offer to you. There's no upfront cost for repairs and we never charge a program fee or closing costs.",
+    },
+    {
+        icon: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/components/icons/choose-date-b9ae74b57c52d9f2dc1fb22c849cd9c9.png",
+        title: "Sell when you're ready",
+        description:
+            "There's no need to prep. When you're ready, our dedicated Client Advisor will take care of everything.",
+    },
+    {
+        icon: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/components/icons/work-together-260856c01ace9309ce6f10567d0bef3c.png",
+        title: "Sell fast and confidently",
+        description:
+            "We can put cash in your hand in as few as 10 days.",
+    },
+];
+
+export const CLIENTS_LIST = [{
+    image: "/client.jpg",
+    name: "Traci M.",
+    role: "HomeLight Simple Sale Client",
+    quote: "HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient."
+}, {
+    image: "/client.jpg",
+    name: "Traci M.",
+    role: "HomeLight Simple Sale Client",
+    quote: "HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient."
+}]

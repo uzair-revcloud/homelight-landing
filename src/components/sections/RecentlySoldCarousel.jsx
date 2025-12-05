@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from '../ui/Carousel';
 import PropertyCard from '../ui/PropertyCard';
-import { properties } from '../../constants/lists';
+import { PROPERTIES_LIST } from '../../constants/lists';
 
 const RecentlySoldCarousel = () => {
 
@@ -12,7 +12,7 @@ const RecentlySoldCarousel = () => {
                 Recently Sold with Simple Sale<sup className="text-2xl">®</sup>
             </>
         }>
-            {properties.map((property) => (
+            {PROPERTIES_LIST.map((property) => (
                 <PropertyCard
                     key={property.id}
                     price={property.price}

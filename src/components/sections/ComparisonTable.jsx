@@ -1,55 +1,6 @@
 import React from "react";
-import { rows } from "../../constants/lists";
+import { TABLE_ROWS } from "../../constants/lists";
 import { strings } from "../../constants/strings";
-
-// const ComparisonTable = () => {
-//     return (
-//         <div className="w-full py-20 bg-white">
-//             <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-//                 HomeLight Simple Sale<sup>®</sup> vs Traditional Sale
-//             </h2>
-
-//             <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-
-//                 {/* Header */}
-//                 <div className="grid grid-cols-3 text-center font-semibold text-gray-700 bg-white py-6">
-//                     <div></div>
-//                     <div className="text-gray-700 text-lg border-l border-gray-200">Traditional Sale</div>
-//                     <div className="text-blue-700 text-lg border-l border-gray-200">
-//                         HomeLight <br /> Simple Sale<sup>®</sup>
-//                     </div>
-//                 </div>
-
-//                 {/* FIRST ROW ONLY */}
-//                 <div className="grid grid-cols-3 items-center border-t border-gray-200">
-
-//                     {/* Left text */}
-//                     <div className="py-6 px-6 text-gray-800">
-//                         Cash offer within a week
-//                     </div>
-
-//                     {/* Traditional Sale – Cross */}
-//                     <div className="flex justify-center">
-//                         <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500">
-//                             ✕
-//                         </div>
-//                     </div>
-
-//                     {/* Simple Sale – Checkmark */}
-//                     <div className="flex justify-center bg-blue-50 py-6">
-//                         <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-white">
-//                             ✓
-//                         </div>
-//                     </div>
-//                 </div>
-
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ComparisonTable;
-
 
 export default function ComparisonTable() {
     const CheckIcon = () => (
@@ -86,7 +37,7 @@ export default function ComparisonTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {rows.map((row, i) => (
+                            {TABLE_ROWS.map((row, i) => (
                                 <tr key={i} className={`border-t border-l border-[#eef0f6]`}>
                                     <td className="p-6 text-gray-700">{row.label}</td>
                                     <td className="p-4 text-center border-r border-l border-[#eef0f6]">
