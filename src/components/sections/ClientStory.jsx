@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { strings } from "../../constants/strings";
 
 export default function ClientStory() {
+    const [showVideo, setShowVideo] = useState(false);
+
     const data = {
         imageUrl: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/images/productsLandingPages/simpleSale/testimonial-bao-w-cf59538fe38458d19d69fbb2ec5f3bb7.webp",
-        videoUrl: "https://player.vimeo.com/video/123456789",
+        videoUrl: "https://www.youtube.com/embed/KSX4cwWRzis?autoplay=1&si=hmLefffGR0yPc7lN",
         quote: strings.client_story_quote,
         name: strings.client_story_name,
         role: strings.client_story_role
-    }
+    };
+
     return (
         <section className="py-20 bg-white">
             <div className="text-center mb-12">
@@ -22,13 +25,14 @@ export default function ClientStory() {
 
             <div className="max-w-[1250px] grid grid-cols-1 md:grid-cols-2 items-start">
 
-                {/* LEFT — Video or Image */}
-                <div className="rounded-2xl overflow-hidden shadow-lg">
-                    {data.imageUrl ? (
+                {/* LEFT — Clickable Image → Video */}
+                <div className="rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+                    {!showVideo ? (
                         <img
                             src={data.imageUrl}
                             alt={data.name}
                             className="w-full h-80 md:h-[380px] object-cover"
+                            onClick={() => setShowVideo(true)}
                         />
                     ) : (
                         <iframe

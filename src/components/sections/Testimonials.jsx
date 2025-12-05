@@ -1,6 +1,5 @@
 import React from "react";
 import ClientCard from "../ui/ClientCard";
-import { strings } from "../../constants/strings";
 import { CLIENTS_LIST } from "../../constants/lists";
 
 export default function Testimonials() {
