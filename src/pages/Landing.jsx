@@ -21,7 +21,6 @@ const Landing = () => {
                 <Features />
                 <PropertySearch />
                 <ClientStory />
-
                 <Testimonials />
                 <ComparisonTable />
                 <RecentlySoldCarousel />
