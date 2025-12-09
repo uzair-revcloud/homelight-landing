@@ -39,7 +39,7 @@ export default function ComparisonTable() {
                         <tbody>
                             {TABLE_ROWS.map((row, i) => (
                                 <tr key={i} className={`border-t border-l border-[#eef0f6]`}>
-                                    <td className="p-6 text-sm md:text-base lg:text-base text-gray-700">{row.label}</td>
+                                    <td className="p-6 text-xs md:text-base lg:text-base text-gray-700">{row.label}</td>
                                     <td className="p-4 text-center border-r border-l border-[#eef0f6]">
                                         {row.traditional ? <CheckIcon /> : <CloseIcon />}
                                     </td>
