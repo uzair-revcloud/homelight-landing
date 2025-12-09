@@ -31,7 +31,7 @@ export default function ComparisonTable() {
                     <table className="w-full text-left shadow rounded-lg">
                         <thead>
                             <tr className="bg-white py-24">
-                                <th className="w-1/2 invisible"></th>
+                                <th className="w-3/5 invisible"></th>
                                 <th className="p-4 py-5 font-semibold text-center border-r border-l border-t rounded-lg border-[#eef0f6] text-gray-800">{strings.comparison_traditional_sale}</th>
                                 <th className="p-4 font-semibold bg-[#f2f8fe] text-center border-r border-l border-t border-[#eef0f6] text-[#1192E5]">{strings.comparison_simple_sale}</th>
                             </tr>
