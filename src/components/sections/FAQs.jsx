@@ -11,8 +11,8 @@ export default function FAQs({ faqs = [] }) {
     };
 
     return (
-        <section className="w-full mx-auto py-20">
-            <h2 className="text-4xl font-bold mb-10 text-center text-[#1e3354]">
+        <section className="w-full mx-auto py-12 md:py-16 lg:py-20 px-4 md:px-0">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-10 text-center text-[#1e3354]">
                 Client FAQs
             </h2>
 
