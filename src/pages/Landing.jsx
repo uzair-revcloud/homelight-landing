@@ -8,7 +8,6 @@ import RecentlySoldCarousel from '../components/sections/RecentlySoldCarousel'
 import ComparisonTable from '../components/sections/ComparisonTable'
 import Testimonials from '../components/sections/Testimonials'
 import ClientStory from '../components/sections/ClientStory'
-import { strings } from '../constants/strings'
 import Features from '../components/sections/Features'
 import PropertySearch from '../components/sections/PropertySearch'
 

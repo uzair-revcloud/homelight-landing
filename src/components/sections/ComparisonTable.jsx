@@ -22,8 +22,8 @@ export default function ComparisonTable() {
     );
 
     return (
-        <div className="w-full py-20 bg-white">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+        <div className="w-full py-12 md:py-16 lg:py-20 bg-white px-4 md:px-0">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12">
                 {strings.comparison_table_heading}
             </h2>
             <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-md overflow-hidden">
