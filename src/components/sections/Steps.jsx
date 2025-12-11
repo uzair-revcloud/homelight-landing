@@ -137,7 +137,7 @@ export default function Steps() {
                     </div>
 
                     {/* VS */}
-                    <div className="flex gap-6 text-2xl md:text-4xl font-bold mb-10 md:mb-24 justify-center md:-ml-10">
+                    <div className="flex gap-6 text-2xl md:text-4xl font-bold mb-10 md:mb-24 justify-center -ml:3 md:-ml-10">
                         <span>Investors</span>
                         <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#f1b707] text-white text-base md:text-lg font-bold">
                             VS
