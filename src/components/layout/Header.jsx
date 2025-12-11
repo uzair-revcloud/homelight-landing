@@ -12,7 +12,7 @@ const Header = () => {
     }, []);
 
     return (
-        <header className={`sticky top-0 z-50 flex justify-between items-center px-4 md:px-8 lg:-ml-[10vw] lg:-mr-[50vw] lg:px-50 py-4 bg-white bg-opacity-95 backdrop-blur-sm transition-shadow duration-200 font-sans ${scrolled ? "shadow-sm" : ""}`}>
+        <header className={`sticky top-0 z-50 flex justify-between items-center px-4 md:px-8 lg:-ml-[10vw] lg:-mr-[50vw] lg:px-50 py-4 bg-white bg-opacity-95 backdrop-blur-sm transition-shadow duration-200 ${scrolled ? "shadow-sm" : ""}`}>
             {/* Logo */}
             <div className="flex items-center gap-2 cursor-pointer">
                 <img src="\logo.png" className="w-32 md:w-40 lg:w-44" alt={strings.company_name} />

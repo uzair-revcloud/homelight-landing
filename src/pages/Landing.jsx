@@ -10,6 +10,7 @@ import Testimonials from '../components/sections/Testimonials'
 import ClientStory from '../components/sections/ClientStory'
 import Features from '../components/sections/Features'
 import PropertySearch from '../components/sections/PropertySearch'
+import Steps from '../components/sections/Steps'
 
 const Landing = () => {
     return (
@@ -17,6 +18,7 @@ const Landing = () => {
             <Header />
             <main>
                 <HeroSection />
+                <Steps />
                 <Features />
                 <PropertySearch />
                 <ClientStory />
