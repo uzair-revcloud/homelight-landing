@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
+import React from 'react';
+import { AddressAutofill } from '@mapbox/search-js-react'
 
 const InputWithButton = ({
     ctaText = 'Send',
@@ -9,6 +11,7 @@ const InputWithButton = ({
     inputClassName = '',
     buttonClassName = '',
     maxWidth = 'max-w-xl',
+    mapboxToken,
 }) => {
     const [value, setValue] = useState('')
 
@@ -17,12 +20,23 @@ const InputWithButton = ({
         if (typeof onSubmit === 'function') onSubmit(value)
     }
 
+    const InputElement = (
+        <input
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder={placeholder}
+            className={`flex-1 py-5 px-3 outline-none text-gray-700 bg-white min-w-0 ${inputClassName}`}
+            autoComplete={mapboxToken ? "address-line1" : "off"}
+        />
+    )
+
     return (
         <form onSubmit={handleSubmit} className={`flex flex-col md:flex-row md:items-center ${className}`}>
             {/* Input container - full width on mobile, flex on desktop */}
             <div className={`flex items-center shadow-lg rounded-lg overflow-hidden w-full ${maxWidth} bg-white border border-gray-300 md:flex-1`}>
                 <svg
-                    className="w-5 h-5 text-gray-400 ml-3 bg-white"
+                    className="w-5 h-5 text-gray-400 ml-3 bg-white shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -34,13 +48,20 @@ const InputWithButton = ({
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                 </svg>
-                <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder={placeholder}
-                    className={`flex-1 py-5 px-3 outline-none text-gray-700 bg-white ${inputClassName}`}
-                />
+                {mapboxToken ? (
+                    <div className="flex-1 min-w-0 relative">
+                        <AddressAutofill
+                            accessToken={mapboxToken}
+                            options={{
+                                country: 'US'
+                            }}
+                        >
+                            {InputElement}
+                        </AddressAutofill>
+                    </div>
+                ) : (
+                    InputElement
+                )}
                 {/* Button inline on desktop */}
                 <button
                     type="submit"

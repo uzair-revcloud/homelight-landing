@@ -1,6 +1,8 @@
 import React from "react";
 import { strings } from "../../constants/strings";
 import InputWithButton from "../ui/InputWithButton";
+import { config } from "../../constants/config";
+
 const HeroSection = () => {
     return (
         <>
@@ -20,6 +22,7 @@ const HeroSection = () => {
                         ctaText={strings.cta_get_offers}
                         ctaColor="#ff9000"
                         className="mt-6"
+                        mapboxToken={import.meta.env.VITE_MAPBOX_TOKEN}
                     />
                 </div>
 
