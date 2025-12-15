@@ -23,7 +23,7 @@ export default function ClientCard({ image, name, role, quote }) {
             <div className="my-6 border-t border-gray-200"></div>
 
             {/* Quote */}
-            <p className="text-gray-500 font-medium leading-relaxed px-2">
+            <p className="text-gray-500 font-medium text-lg leading-relaxed px-2">
                 "{quote}"
             </p>
         </div>

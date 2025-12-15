@@ -127,12 +127,13 @@ export const FEATURES_LIST = [
 
 export const CLIENTS_LIST = [{
     image: "/client.jpg",
+    name: "Kevin L.",
+    role: "HomeLight Simple Sale Client",
+    quote: 'From the initial phone consultation, to the closing of escrow, the entire process was so quick and simple. Everyone was extremely helpful, responsive, and professional.',
+}, 
+{
+    image: "/client-2.jpg",
     name: "Traci M.",
     role: "HomeLight Simple Sale Client",
-    quote: "HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient."
-}, {
-    image: "/client.jpg",
-    name: "Traci M.",
-    role: "HomeLight Simple Sale Client",
-    quote: "HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient."
+    quote: 'HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient. I would definitely recommend Simple Sale to anyone trying to sell their home.',
 }]
