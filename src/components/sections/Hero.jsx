@@ -1,7 +1,6 @@
 import React from "react";
 import { strings } from "../../constants/strings";
 import InputWithButton from "../ui/InputWithButton";
-import { config } from "../../constants/config";
 
 const HeroSection = () => {
     return (
