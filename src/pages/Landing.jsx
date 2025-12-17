@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import HeroSection from "../components/sections/Hero";
 import React from "react";
@@ -19,27 +19,51 @@ import { usePageData } from "../hooks/usePageData.jsx";
 
 const Landing = () => {
   const [params] = useSearchParams();
-  const pageData = usePageData(params);
+  const [pageViewFired, setPageViewFired] = useState(false);
+  const pageData = usePageData(params, { pageViewFired });
 
-  console.log(pageData);
+  const prefillAddress = (() => {
+    const clean = (v) => (typeof v === "string" ? v.trim() : "");
+    const street = clean(pageData?.prepop_street);
+    const city = clean(pageData?.prepop_city);
+    const state = clean(pageData?.prepop_state);
+    const zip = clean(pageData?.prepop_zip);
+    const address = clean(pageData?.prepop_address);
+
+    if (address) return address;
+
+    const parts = [];
+    if (street) parts.push(street);
+
+    const localityParts = [];
+    if (city) localityParts.push(city);
+    if (state) localityParts.push(state);
+    const locality = localityParts.join(", ");
+
+    const tail = [locality, zip].filter(Boolean).join(locality && zip ? " " : "");
+    if (tail) parts.push(tail);
+
+    return parts.join(parts.length > 1 ? ", " : "");
+  })();
 
   useEffect(() => {
-    trackPageView(EVENTS.PAGE_VISIT, {
+    trackPageView(EVENTS.PAGE_VIEW, {
       pageTitle: "HomeLight Landing",
       url: window.location.href,
       timestamp: new Date().toISOString(),
       entry: true,
     });
+    setPageViewFired(true);
   }, []);
 
   return (
     <div className="min-h-screen w-full">
       <Header />
       <main>
-        <HeroSection />
+        <HeroSection prefillAddress={prefillAddress} />
         <Steps />
         <Features />
-        <PropertySearch />
+        <PropertySearch prefillAddress={prefillAddress} />
         <ClientStory />
         <Testimonials />
         <ComparisonTable />

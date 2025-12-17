@@ -2,7 +2,7 @@ import React from "react";
 import { strings } from "../../constants/strings";
 import InputWithButton from "../ui/InputWithButton";
 
-export default function PropertySearch() {
+export default function PropertySearch({ prefillAddress = "" }) {
     return (
         <section className="py-12 md:py-16 lg:py-20 bg-[#2c4a6b] px-4 md:px-8 lg:-ml-[10vw] lg:-mr-[10vw] lg:px-50">
             <div className="max-w-3xl mx-auto">
@@ -14,6 +14,7 @@ export default function PropertySearch() {
                     ctaText={strings.cta_get_estimate}
                     ctaColor="#3ba5f5"
                     maxWidth="max-w-6xl"
+                    value={prefillAddress}
                     mapboxToken={import.meta.env.VITE_MAPBOX_TOKEN}
                 />
             </div>

@@ -17,6 +17,12 @@ const InputWithButton = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef();
 
+  // Keep internal state in sync for initial prefill (don’t clobber user typing)
+  useEffect(() => {
+    if (!value) return;
+    setInputValue((prev) => (prev ? prev : value));
+  }, [value]);
+
   const handleSubmit = (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (typeof onSubmit === "function") onSubmit(inputValue);
@@ -25,7 +31,9 @@ const InputWithButton = ({
 
   // Fetch suggestions from Mapbox API
   useEffect(() => {
-    if (!mapboxToken || !inputValue) {
+    // Only fetch when the user is actively interacting (dropdown is open).
+    // This prevents burning Mapbox calls for prefilled/initial values.
+    if (!showDropdown || !mapboxToken || !inputValue) {
       setSuggestions([]);
       return;
     }
@@ -53,7 +61,7 @@ const InputWithButton = ({
       clearTimeout(debounceTimeout);
       controller.abort();
     };
-  }, [inputValue, mapboxToken]);
+  }, [inputValue, mapboxToken, showDropdown]);
 
   // Handle clicking outside to close dropdown
   useEffect(() => {
