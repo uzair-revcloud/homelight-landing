@@ -42,6 +42,9 @@ export function useValidatedLandingPage({
   const hasValidatedLandingPageRef = useRef(false);
 
   useEffect(() => {
+    // Only call API if enabled via environment variable
+    if (!import.meta.env.VITE_ENABLE_LANDING_PAGE_API) return;
+    
     if (!pageViewFired) return;
     if (hasValidatedLandingPageRef.current) return;
     if (!pageData || Object.keys(pageData).length === 0) return;
