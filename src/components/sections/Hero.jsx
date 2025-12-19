@@ -2,7 +2,7 @@ import React from "react";
 import { strings } from "../../constants/strings";
 import InputWithButton from "../ui/InputWithButton";
 
-const HeroSection = ({ prefillAddress = "" }) => {
+const HeroSection = ({ prefillAddress = "", pageData = {} }) => {
     return (
         <>
             <section className="w-full flex flex-col lg:flex-row justify-between items-center px-4 md:px-8 lg:px-10 py-12 md:py-20 lg:py-24 max-w-full mx-auto  bg-white">
@@ -23,6 +23,7 @@ const HeroSection = ({ prefillAddress = "" }) => {
                         className="mt-6"
                         value={prefillAddress}
                         mapboxToken={import.meta.env.VITE_MAPBOX_TOKEN}
+                        pageData={pageData}
                     />
                 </div>
 

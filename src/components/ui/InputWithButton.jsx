@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { trackQuizStart, trackPartialQuizSubmit } from "../../analytics/quiz";
+import { buildRedirectUrl } from "../../utils/buildRedirectUrl";
 
 const InputWithButton = ({
   ctaText = "Send",
@@ -11,10 +12,12 @@ const InputWithButton = ({
   inputClassName = "",
   maxWidth = "max-w-xl",
   mapboxToken,
+  pageData = {},
 }) => {
   const [inputValue, setInputValue] = useState(value || "");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dropdownRef = useRef();
 
   // Keep internal state in sync for initial prefill (don’t clobber user typing)
@@ -23,10 +26,22 @@ const InputWithButton = ({
     setInputValue((prev) => (prev ? prev : value));
   }, [value]);
 
+  const handleRedirect = (address) => {
+    if (isLoading) return; // Prevent multiple redirects
+    
+    setIsLoading(true);
+    const redirectUrl = buildRedirectUrl({
+      address: address || inputValue || "",
+      timestamp: pageData?.timestamp || new Date().toISOString(),
+    }, "https://www.homelight.com/simple-sale/quiz");
+    window.location.href = redirectUrl;
+  };
+
   const handleSubmit = (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (typeof onSubmit === "function") onSubmit(inputValue);
     setShowDropdown(false);
+    handleRedirect(inputValue);
   };
 
   // Fetch suggestions from Mapbox API
@@ -80,6 +95,8 @@ const InputWithButton = ({
     // Fire both quiz events when user selects from dropdown
     trackQuizStart(place.place_name, "address_search");
     trackPartialQuizSubmit(place.place_name, inputValue, "address_search");
+    // Redirect to checkout URL with encoded params
+    handleRedirect(place.place_name);
   };
 
   return (
@@ -134,20 +151,74 @@ const InputWithButton = ({
         <button
           type="submit"
           onClick={handleSubmit}
-          style={{ backgroundColor: ctaColor }}
-          className="hidden md:block m-2 text-white font-semibold px-4 py-3 transition-colors rounded-md"
+          disabled={isLoading}
+          style={{ backgroundColor: ctaColor, opacity: isLoading ? 0.7 : 1 }}
+          className="hidden md:block m-2 text-white font-semibold px-4 py-3 transition-colors rounded-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {ctaText}
+          {isLoading ? (
+            <span className="flex items-center gap-2">
+              <svg
+                className="animate-spin h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Loading...
+            </span>
+          ) : (
+            ctaText
+          )}
         </button>
       </div>
 
       <button
         type="submit"
         onClick={handleSubmit}
-        style={{ backgroundColor: ctaColor }}
-        className="md:hidden w-full mt-4 text-white font-semibold px-4 py-4 transition-colors rounded-md shadow-lg"
+        disabled={isLoading}
+        style={{ backgroundColor: ctaColor, opacity: isLoading ? 0.7 : 1 }}
+        className="md:hidden w-full mt-4 text-white font-semibold px-4 py-4 transition-colors rounded-md shadow-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {ctaText}
+        {isLoading ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg
+              className="animate-spin h-4 w-4 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Loading...
+          </span>
+        ) : (
+          ctaText
+        )}
       </button>
     </form>
   );

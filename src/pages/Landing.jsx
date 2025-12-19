@@ -16,11 +16,13 @@ import { trackPageView } from "../analytics/track.js";
 import { EVENTS } from "../analytics/events.js";
 import { useSearchParams } from "react-router-dom";
 import { usePageData } from "../hooks/usePageData.jsx";
+import { useGeolocation } from "../hooks/useGeolocation.js";
 
 const Landing = () => {
   const [params] = useSearchParams();
   const [pageViewFired, setPageViewFired] = useState(false);
   const pageData = usePageData(params, { pageViewFired });
+  const { requestLocation } = useGeolocation();
 
   const prefillAddress = (() => {
     const clean = (v) => (typeof v === "string" ? v.trim() : "");
@@ -52,18 +54,24 @@ const Landing = () => {
       url: window.location.href,
       timestamp: new Date().toISOString(),
       entry: true,
+    }).then(() => {
+      setPageViewFired(true);
     });
-    setPageViewFired(true);
   }, []);
+
+  // Request user location as soon as the page loads
+  useEffect(() => {
+    requestLocation();
+  }, [requestLocation]);
 
   return (
     <div className="min-h-screen w-full">
       <Header />
       <main>
-        <HeroSection prefillAddress={prefillAddress} />
+        <HeroSection prefillAddress={prefillAddress} pageData={pageData} />
         <Steps />
         <Features />
-        <PropertySearch prefillAddress={prefillAddress} />
+        <PropertySearch prefillAddress={prefillAddress} pageData={pageData} />
         <ClientStory />
         <Testimonials />
         <ComparisonTable />

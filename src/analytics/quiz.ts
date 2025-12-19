@@ -9,6 +9,7 @@ export interface QuizEventProperties {
   input_value?: string;
   user_agent?: string;
   timestamp?: string;
+  invalid_fields?: string[];
 }
 
 /**

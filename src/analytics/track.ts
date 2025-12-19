@@ -23,13 +23,13 @@ export function trackEvent<T extends Record<string, any>>(
 export function trackPageView(
   pageName: string,
   properties?: Record<string, any>
-) {
-  if (!analytics) return;
+): Promise<void> {
+  if (!analytics) return Promise.resolve();
 
-  analytics.page(pageName, {
+  return analytics.page(pageName, {
     ...defaultEventProperties,
     ...properties,
     app: "web",
     timestamp: new Date().toISOString(),
-  });
+  }).then(() => {});
 }
