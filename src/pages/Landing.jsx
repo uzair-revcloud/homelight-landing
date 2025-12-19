@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../components/layout/Header";
 import HeroSection from "../components/sections/Hero";
 import React from "react";
@@ -26,6 +26,7 @@ const Landing = () => {
   const [pageViewFired, setPageViewFired] = useState(false);
   const { pageData, setPageData } = usePageData(params, { pageViewFired });
   const { requestLocation, address: geolocationAddress, status: geolocationStatus, coords } = useGeolocation();
+  const pageViewFiredRef = useRef(false);
 
   const prefillAddress = (() => {
     const clean = (v) => (typeof v === "string" ? v.trim() : "");
@@ -52,6 +53,10 @@ const Landing = () => {
   })();
 
   useEffect(() => {
+    // Ensure page view event fires exactly once
+    if (pageViewFiredRef.current) return;
+    
+    pageViewFiredRef.current = true;
     trackPageView(EVENTS.PAGE_VIEW, {
       pageTitle: "HomeLight Landing",
       url: window.location.href,
