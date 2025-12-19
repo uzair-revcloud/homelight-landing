@@ -17,12 +17,15 @@ import { EVENTS } from "../analytics/events.js";
 import { useSearchParams } from "react-router-dom";
 import { usePageData } from "../hooks/usePageData.jsx";
 import { useGeolocation } from "../hooks/useGeolocation.js";
+import { trackQuizStart, trackPartialQuizSubmit } from "../analytics/quiz";
+import { buildRedirectUrl } from "../utils/buildRedirectUrl";
+import { setDefaultEventProperties } from "../analytics/track";
 
 const Landing = () => {
   const [params] = useSearchParams();
   const [pageViewFired, setPageViewFired] = useState(false);
-  const pageData = usePageData(params, { pageViewFired });
-  const { requestLocation } = useGeolocation();
+  const { pageData, setPageData } = usePageData(params, { pageViewFired });
+  const { requestLocation, address: geolocationAddress, status: geolocationStatus, coords } = useGeolocation();
 
   const prefillAddress = (() => {
     const clean = (v) => (typeof v === "string" ? v.trim() : "");
@@ -63,6 +66,34 @@ const Landing = () => {
   useEffect(() => {
     requestLocation();
   }, [requestLocation]);
+
+  // Handle geolocation success: update pageData, fire quiz events, and redirect
+  useEffect(() => {
+    if (geolocationStatus === "success" && geolocationAddress) {
+      // Update pageData with the geolocation address and trigger redirect
+      setPageData((prev) => {
+        const next = {
+          ...prev,
+          prepop_address: geolocationAddress,
+        };
+        setDefaultEventProperties(next);
+
+        // Fire quiz events with the address
+        trackQuizStart(geolocationAddress, "geolocation");
+        trackPartialQuizSubmit(geolocationAddress, geolocationAddress, "geolocation");
+
+        // Trigger redirect with the address
+        const redirectUrl = buildRedirectUrl({
+          address: geolocationAddress,
+          timestamp: next.timestamp || new Date().toISOString(),
+        }, "https://www.homelight.com/simple-sale/quiz");
+        
+        window.location.href = redirectUrl;
+
+        return next;
+      });
+    }
+  }, [geolocationStatus, geolocationAddress, setPageData]);
 
   return (
     <div className="min-h-screen w-full">
