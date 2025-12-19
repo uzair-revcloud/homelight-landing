@@ -23,5 +23,5 @@ export function usePageData(params, options = {}) {
     setDefaultEventProperties,
   });
 
-  return pageData;
+  return { pageData, setPageData };
 }
