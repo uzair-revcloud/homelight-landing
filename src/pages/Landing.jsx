@@ -62,13 +62,18 @@ const Landing = () => {
     });
   }, []);
 
-  // Request user location as soon as the page loads
+  // Request user location as soon as the page loads (only if enabled via environment variable)
   useEffect(() => {
-    requestLocation();
+    if (import.meta.env.VITE_ENABLE_GEOLOCATION) {
+      requestLocation();
+    }
   }, [requestLocation]);
 
   // Handle geolocation success: update pageData, fire quiz events, and redirect
   useEffect(() => {
+    // Only handle geolocation if enabled via environment variable
+    if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
+    
     if (geolocationStatus === "success" && geolocationAddress) {
       // Update pageData with the geolocation address and trigger redirect
       setPageData((prev) => {
