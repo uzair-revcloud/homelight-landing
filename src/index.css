@@ -117,3 +117,53 @@ h1 {
 .header-logo-component .logo.show {
   display: block;
 }
+
+/* Footer Grid System */
+.page-footer-component .grid-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.page-footer-component .row {
+  width: 100%;
+  display: block;
+  margin: 0;
+}
+
+.page-footer-component .col-xs-12 {
+  width: 100%;
+  padding: 0;
+}
+
+.page-footer-component .last-details {
+  list-style: none;
+  padding: 0;
+  color: #8e929c;
+  font-size: 14px;
+}
+
+.page-footer-component .last-details li {
+  margin-bottom: 0.5rem;
+}
+
+.page-footer-component .last-details .tos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-footer-component .last-details a {
+  color: #8e929c;
+}
+
+.page-footer-component .last-details a:hover {
+  text-decoration: underline;
+}
+
+.page-footer-component .lending-license {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #8e929c;
+  font-size: 14px;
+}
