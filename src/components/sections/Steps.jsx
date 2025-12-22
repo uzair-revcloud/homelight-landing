@@ -65,7 +65,7 @@ export default function Steps() {
           4 EASY STEPS
         </div>
         <h2 className="text-3xl font-bold mt-4">
-          How HomeLight <br className="md:hidden" /> Simple Sale<sup>®</sup>{" "}
+          How <br className="md:hidden" /> Trusted Home Offers<sup>®</sup>{" "}
           Works
         </h2>
         <p className="text-lg mt-4 max-w-4xl mx-auto">

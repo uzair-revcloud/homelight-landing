@@ -58,7 +58,7 @@ const Landing = () => {
     
     pageViewFiredRef.current = true;
     trackPageView(EVENTS.PAGE_VIEW, {
-      pageTitle: "HomeLight Landing",
+      pageTitle: "Trusted Home Offers",
       url: window.location.href,
       timestamp: new Date().toISOString(),
       entry: true,

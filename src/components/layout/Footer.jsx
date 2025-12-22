@@ -6,7 +6,7 @@ export default function Footer() {
 
             {/* Accessibility Text */}
             <p className="max-w-4xl text-xs leading-relaxed mb-6">
-                Our Commitment to Accessibility: HomeLight is committed to making our website accessible
+                Our Commitment to Accessibility: Trusted Home Offers is committed to making our website accessible
                 and user friendly to all. While we are constantly working to improve, we welcome your feedback
                 and accommodation requests. If you are having difficulty accessing or navigating our website,
                 or if you have any suggestions to improve accessibility,
@@ -15,7 +15,7 @@ export default function Footer() {
 
             {/* Links */}
             <div className="flex flex-col md:flex-row flex-wrap justify-center text-xs mb-4 text-gray-700 gap-2 md:gap-0">
-                <span className="px-2">© HomeLight, Inc., 1375 N Scottsdale Road, Suite 140, Scottsdale, AZ 85257</span>
+                <span className="px-2">© Trusted Home Offers, Inc., 1375 N Scottsdale Road, Suite 140, Scottsdale, AZ 85257</span>
 
                 <span className="text-gray-300 hidden md:inline">|</span>
 
@@ -33,7 +33,7 @@ export default function Footer() {
 
             {/* License text */}
             <p className="text-xs mb-4">
-                HomeLight, Inc. is a licensed real estate broker in the State of California, DRE license # 01900940.
+                Trusted Home Offers, Inc. is a licensed real estate broker in the State of California, DRE license # 01900940.
             </p>
 
             {/* Copyright */}

@@ -6,7 +6,7 @@ export default function ClientStory() {
 
     const data = {
         imageUrl: "https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/images/productsLandingPages/simpleSale/testimonial-bao-w-cf59538fe38458d19d69fbb2ec5f3bb7.webp",
-        videoUrl: "https://www.youtube.com/embed/KSX4cwWRzis?autoplay=1&si=hmLefffGR0yPc7lN",
+        videoUrl: "https://www.youtube.com/embed/hmLePc7lN",
         quote: strings.client_story_quote,
         name: strings.client_story_name,
         role: strings.client_story_role

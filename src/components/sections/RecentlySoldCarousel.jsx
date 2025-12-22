@@ -9,7 +9,7 @@ const RecentlySoldCarousel = () => {
     return (
         <Carousel title={
             <>
-                Recently Sold with Simple Sale<sup className="text-2xl">®</sup>
+                Recently Sold with Trusted Home Offers<sup className="text-2xl">®</sup>
             </>
         }>
             {PROPERTIES_LIST.map((property) => (

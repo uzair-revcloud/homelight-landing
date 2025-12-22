@@ -38,7 +38,7 @@ export default function Testimonials() {
     <div className="bg-[#f2f8fe] py-12 md:py-16 lg:py-20 pb-20 md:pb-28 lg:pb-32 px-4 md:px-8 lg:-ml-[10vw] lg:-mr-[10vw] lg:px-50">
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-16 md:mb-24 lg:mb-28">
         What our clients are saying
-        <br /> about HomeLight Simple Sale<sup className="text-2xl">®</sup>
+        <br /> about Trusted Home Offers<sup className="text-2xl">®</sup>
       </h2>
 
       {/* Mobile: Scrollable carousel */}

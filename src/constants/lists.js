@@ -2,12 +2,12 @@ export const FAQS_LIST = [
     {
         question: "Who is buying my home?",
         answer:
-            "HomeLight has built a nationwide network of hundreds of pre-approved real estate cash buyers or investors. We let them compete to buy your home, so you can get the best offer.",
+            "Trusted Home Offers has built a nationwide network of hundreds of pre-approved real estate cash buyers or investors. We let them compete to buy your home, so you can get the best offer.",
     },
     {
         question: "Do I need an agent to participate?",
         answer:
-            "No, you do not need an agent to request offers with HomeLight.",
+            "No, you do not need an agent to request offers with Trusted Home Offers.",
     },
     {
         question: "Can I sell a home that's currently listed?",
@@ -22,12 +22,12 @@ export const FAQS_LIST = [
     {
         question: "Is there a cost to request offers?",
         answer:
-            "No. Requesting an offer from HomeLight is completely free.",
+            "No. Requesting an offer from Trusted Home Offers is completely free.",
     },
     {
         question: "Am I obligated to accept an offer?",
         answer:
-            "No, you are not obligated to accept any Simple Sale offer you receive.",
+            "No, you are not obligated to accept any Trusted Home Offers offer you receive.",
     },
 ];
 
@@ -128,12 +128,12 @@ export const FEATURES_LIST = [
 export const CLIENTS_LIST = [{
     image: "/client.jpg",
     name: "Kevin L.",
-    role: "HomeLight Simple Sale Client",
+    role: "Trusted Home Offers Client",
     quote: 'From the initial phone consultation, to the closing of escrow, the entire process was so quick and simple. Everyone was extremely helpful, responsive, and professional.',
 }, 
 {
     image: "/client-2.jpg",
     name: "Traci M.",
-    role: "HomeLight Simple Sale Client",
-    quote: 'HomeLight Simple Sale helped match me with a cash buyer within days. The process was extremely easy and efficient. I would definitely recommend Simple Sale to anyone trying to sell their home.',
+    role: "Trusted Home Offers Client",
+    quote: 'Trusted Home Offers helped match me with a cash buyer within days. The process was extremely easy and efficient. I would definitely recommend Trusted Home Offers to anyone trying to sell their home.',
 }]
