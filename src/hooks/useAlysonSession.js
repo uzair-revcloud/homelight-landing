@@ -7,20 +7,19 @@ const AUTH_TOKEN = import.meta.env.VITE_ALYSON_AUTH_TOKEN;
 const API_URL = 'https://api.palisade.ai/api/alyson-session/params';
 
 // Helper function to send Segment page event
-const sendSegmentPageEvent = (sessionId, status, errorMessage, isPageView) => {
+const sendSegmentPageEvent = async (sessionId, status, errorMessage, isPageView) => {
     if (!analytics) return;
 
     const properties = {
         sessionId: sessionId || '',
         status: status || '',
         errorMessage: errorMessage || '',
-        timestamp: new Date().toISOString(),
     };
 
     if (isPageView) {
-        trackPageView('Alyson Session', properties);
+        // await trackPageView('Alyson Session', properties);
     } else {
-        analytics.track('Alyson Session Event', properties);
+        // await trackEvent('Alyson Session Event', properties);
     }
 };
 

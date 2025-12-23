@@ -44,7 +44,7 @@ export function useValidatedLandingPage({
   useEffect(() => {
     // Only call API if enabled via environment variable
     if (!import.meta.env.VITE_ENABLE_LANDING_PAGE_API) return;
-    
+
     if (!pageViewFired) return;
     if (hasValidatedLandingPageRef.current) return;
     if (!pageData || Object.keys(pageData).length === 0) return;
@@ -63,17 +63,16 @@ export function useValidatedLandingPage({
 
         setPageData((prev) => {
           const next = applyValidatedParamsToPageData({ ...prev }, validatedParams);
-          
           // Add invalidated_fields to pageData
           if (invalidatedFields !== null) {
             next.invalid_fields = invalidatedFields;
           }
-          
+
           // Add validated_url to pageData
           if (validatedUrl !== null) {
             next.validated_url = validatedUrl;
           }
-          
+
           setDefaultEventProperties(next);
           return next;
         });
@@ -83,7 +82,7 @@ export function useValidatedLandingPage({
           window.history.replaceState({}, "", validatedUrl);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     return () => {
       cancelled = true;

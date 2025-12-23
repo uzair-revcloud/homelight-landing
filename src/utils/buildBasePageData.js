@@ -68,16 +68,6 @@ export function buildBasePageData(params) {
   data.quiz_firstname = "";
   data.quiz_lastname = "";
 
-  // ---------- Derived names ----------
-  try {
-    const fullName = getQueryParam(params, "name");
-    data.prepop_firstname = fullName.split(" ")[0] || "";
-    data.prepop_lastname = fullName.split(" ")[1] || "";
-  } catch {
-    data.prepop_firstname = "";
-    data.prepop_lastname = "";
-  }
-
   return data;
 }
 

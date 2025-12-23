@@ -59,10 +59,9 @@ const Landing = () => {
     if (pageViewFiredRef.current) return;
     
     pageViewFiredRef.current = true;
-    trackPageView(EVENTS.PAGE_VIEW, {
-      pageTitle: "Trusted Home Offers",
+    trackPageView("Trusted Home Offers", {
+      title: "Trusted Home Offers",
       url: window.location.href,
-      timestamp: new Date().toISOString(),
       entry: true,
     }).then(() => {
       setPageViewFired(true);
@@ -99,7 +98,6 @@ const Landing = () => {
           address: geolocationAddress,
           phone: pageData?.prepop_phone || "",
           name: pageData?.prepop_name || "",
-          timestamp: next.timestamp || new Date().toISOString(),
         }, "https://www.homelight.com/simple-sale/quiz");
         
         window.location.href = redirectUrl;

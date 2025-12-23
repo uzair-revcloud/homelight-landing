@@ -15,21 +15,17 @@ export function trackEvent<T extends Record<string, any>>(
   analytics.track(event, {
     ...defaultEventProperties,
     ...properties,
-    app: "web",
-    timestamp: new Date().toISOString(),
   });
 }
 
-export function trackPageView(
+export async function trackPageView(
   pageName: string,
   properties?: Record<string, any>
 ): Promise<void> {
   if (!analytics) return Promise.resolve();
 
-  return analytics.page(pageName, {
+  return analytics.page(properties?.url || "", pageName, {
     ...defaultEventProperties,
     ...properties,
-    app: "web",
-    timestamp: new Date().toISOString(),
-  }).then(() => {});
+  }).then(() => { });
 }

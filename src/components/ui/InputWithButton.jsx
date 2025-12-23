@@ -28,21 +28,26 @@ const InputWithButton = ({
 
   const handleRedirect = (address) => {
     if (isLoading) return; // Prevent multiple redirects
-    
+
     setIsLoading(true);
-    const redirectUrl = buildRedirectUrl({
-      address: address || inputValue || "",
-      name: pageData?.prepop_name || "",
-      phone: pageData?.prepop_phone || "",
-      timestamp: pageData?.timestamp || new Date().toISOString(),
-    }, "https://www.homelight.com/simple-sale/quiz");
+    const redirectUrl = buildRedirectUrl(
+      {
+        address: address || inputValue || "",
+        name: pageData?.prepop_name || "",
+        phone: pageData?.prepop_phone || "",
+      },
+      "https://www.homelight.com/simple-sale/quiz"
+    );
     window.location.href = redirectUrl;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (typeof onSubmit === "function") onSubmit(inputValue);
     setShowDropdown(false);
+    setIsLoading(false);
+    await trackQuizStart(inputValue, "address_search");
+    await trackPartialQuizSubmit(inputValue, inputValue, "address_search");
     handleRedirect(inputValue);
   };
 
@@ -91,12 +96,16 @@ const InputWithButton = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelectSuggestion = (place) => {
+  const handleSelectSuggestion = async (place) => {
     setInputValue(place.place_name);
     setShowDropdown(false);
     // Fire both quiz events when user selects from dropdown
-    trackQuizStart(place.place_name, "address_search");
-    trackPartialQuizSubmit(place.place_name, inputValue, "address_search");
+    await trackQuizStart(place.place_name, "address_search");
+    await trackPartialQuizSubmit(
+      place.place_name,
+      inputValue,
+      "address_search"
+    );
     // Redirect to checkout URL with encoded params
     handleRedirect(place.place_name);
   };

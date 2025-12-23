@@ -28,15 +28,6 @@ export function applyValidatedParamsToPageData(prev, validatedParams) {
     next.affid = validatedParams.affid || "";
     next.sessionId = validatedParams.sessionId || "";
 
-    // Re-derive names from validated full name if present
-    try {
-        const fullName = next.prepop_name || "";
-        if (fullName) {
-            next.prepop_firstname = fullName.split(" ")[0] || "";
-            next.prepop_lastname = fullName.split(" ")[1] || "";
-        }
-    } catch { }
-
     return next;
 }
 
