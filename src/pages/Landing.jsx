@@ -17,6 +17,7 @@ import { EVENTS } from "../analytics/events.js";
 import { useSearchParams } from "react-router-dom";
 import { usePageData } from "../hooks/usePageData.jsx";
 import { useGeolocation } from "../hooks/useGeolocation.js";
+import { useAlysonSession } from "../hooks/useAlysonSession.js";
 import { trackQuizStart, trackPartialQuizSubmit } from "../analytics/quiz";
 import { buildRedirectUrl } from "../utils/buildRedirectUrl";
 import { setDefaultEventProperties } from "../analytics/track";
@@ -26,8 +27,8 @@ const Landing = () => {
   const [pageViewFired, setPageViewFired] = useState(false);
   const { pageData, setPageData } = usePageData(params, { pageViewFired });
   const { requestLocation, address: geolocationAddress, status: geolocationStatus, coords } = useGeolocation();
+  const { sessionId } = useAlysonSession();
   const pageViewFiredRef = useRef(false);
-  const sessionIdInitializedRef = useRef(false);
 
   const prefillAddress = (() => {
     const clean = (v) => (typeof v === "string" ? v.trim() : "");
@@ -52,62 +53,6 @@ const Landing = () => {
 
     return parts.join(parts.length > 1 ? ", " : "");
   })();
-
-  // Generate UUID v4, store in sessionStorage, and update URL params
-  useEffect(() => {
-    if (sessionIdInitializedRef.current) return;
-    sessionIdInitializedRef.current = true;
-
-    // Generate UUID v4 using crypto.randomUUID() (standard browser API)
-    const generateUUIDv4 = () => {
-      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-        return crypto.randomUUID();
-      }
-      // Fallback for older browsers
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-        const r = (Math.random() * 16) | 0;
-        const v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      });
-    };
-
-    // Get or generate sessionId
-    let sessionId = sessionStorage.getItem('sessionId');
-    const currentSessionId = params.get('sessionId');
-    
-    if (!sessionId && currentSessionId) {
-      // Use existing sessionId from URL and store it
-      sessionId = currentSessionId;
-      sessionStorage.setItem('sessionId', sessionId);
-    } else if (!sessionId) {
-      // Generate new UUID v4
-      sessionId = generateUUIDv4();
-      sessionStorage.setItem('sessionId', sessionId);
-    }
-
-    // Update URL params if needed
-    const currentCheckoutId = params.get('checkoutId');
-    
-    let needsUpdate = false;
-    const newParams = new URLSearchParams(params);
-
-    // Add sessionId if not present
-    if (!currentSessionId) {
-      newParams.set('sessionId', sessionId);
-      needsUpdate = true;
-    }
-
-    // Add checkoutId if not present
-    if (!currentCheckoutId) {
-      newParams.set('checkoutId', '28');
-      needsUpdate = true;
-    }
-
-    // Update URL if params changed
-    if (needsUpdate) {
-      setParams(newParams, { replace: true });
-    }
-  }, [params, setParams]);
 
   useEffect(() => {
     // Ensure page view event fires exactly once
