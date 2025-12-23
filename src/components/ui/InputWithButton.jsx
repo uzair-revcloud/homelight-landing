@@ -32,6 +32,8 @@ const InputWithButton = ({
     setIsLoading(true);
     const redirectUrl = buildRedirectUrl({
       address: address || inputValue || "",
+      name: pageData?.prepop_name || "",
+      phone: pageData?.prepop_phone || "",
       timestamp: pageData?.timestamp || new Date().toISOString(),
     }, "https://www.homelight.com/simple-sale/quiz");
     window.location.href = redirectUrl;

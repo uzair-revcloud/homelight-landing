@@ -8,12 +8,16 @@ export function buildRedirectUrl(params, baseUrl = null) {
   const {
     address = "",
     timestamp = new Date().toISOString(),
+    phone = "",
+    name = "",
   } = params;
 
   const url = new URL(baseUrl);
-  
+
   url.searchParams.set("interested_in_agent", true)
   if (address) url.searchParams.set("address", address);
+  if (name) url.searchParams.set("n", name);
+  if (phone) url.searchParams.set("p", phone);
   if (timestamp) url.searchParams.set("timestamp", timestamp);
 
   return url.toString();

@@ -3,6 +3,7 @@ import { setDefaultEventProperties } from "../analytics/track";
 import { buildBasePageData } from "../utils/buildBasePageData";
 import { useAsyncEnrichments } from "./pageData/useAsyncEnrichments";
 import { useValidatedLandingPage } from "./pageData/useValidatedLandingPage";
+import { useIdentityEnrichment } from "./pageData/useIdentityEnrichment";
 
 export function usePageData(params, options = {}) {
   const [pageData, setPageData] = useState({});
@@ -15,6 +16,8 @@ export function usePageData(params, options = {}) {
   }, [params]);
 
   useAsyncEnrichments({ setPageData, setDefaultEventProperties });
+
+  useIdentityEnrichment({ pageData, setPageData, setDefaultEventProperties });
 
   useValidatedLandingPage({
     pageViewFired,
