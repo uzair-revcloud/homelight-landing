@@ -46,8 +46,12 @@ const InputWithButton = ({
     if (typeof onSubmit === "function") onSubmit(inputValue);
     setShowDropdown(false);
     setIsLoading(false);
-    await trackQuizStart(inputValue, "address_search");
-    await trackPartialQuizSubmit(inputValue, inputValue, "address_search");
+    await trackQuizStart(inputValue, "address_search", {
+      address_chosen: "manual",
+    });
+    await trackPartialQuizSubmit(inputValue, inputValue, "address_search", {
+      address_chosen: "manual",
+    });
     handleRedirect(inputValue);
   };
 
@@ -100,11 +104,14 @@ const InputWithButton = ({
     setInputValue(place.place_name);
     setShowDropdown(false);
     // Fire both quiz events when user selects from dropdown
-    await trackQuizStart(place.place_name, "address_search");
+    await trackQuizStart(place.place_name, "address_search", {
+      address_chosen: "dropdown",
+    });
     await trackPartialQuizSubmit(
       place.place_name,
       inputValue,
-      "address_search"
+      "address_search",
+      { address_chosen: "dropdown" }
     );
     // Redirect to checkout URL with encoded params
     handleRedirect(place.place_name);

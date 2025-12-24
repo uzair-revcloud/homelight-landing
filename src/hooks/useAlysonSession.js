@@ -40,7 +40,7 @@ export function useAlysonSession() {
             window.alysonSessionId = savedSessionId;
             sendSegmentPageEvent(savedSessionId, 'success', '', true);
             window.pageUrl = new URLSearchParams(window.location.search);
-            
+
             // Append sessionId to URL if not already present
             const parser = new URL(window.location.href);
             const searchParams = parser.searchParams;
@@ -48,7 +48,7 @@ export function useAlysonSession() {
                 searchParams.set('sessionId', savedSessionId);
                 const newUrl = `${parser.origin}${parser.pathname}?${searchParams.toString()}${parser.hash}`;
                 window.history.replaceState({}, '', newUrl);
-                
+
                 // Update React Router params to keep in sync
                 const newParams = new URLSearchParams(searchParams);
                 setParams(newParams, { replace: true });

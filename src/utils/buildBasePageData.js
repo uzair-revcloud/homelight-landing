@@ -23,6 +23,7 @@ export function buildBasePageData(params) {
   data.url_without_param = (w?.location?.origin || "") + (w?.location?.pathname || "");
   data.userAgent = n?.userAgent || "";
   data.locale = n?.language || "";
+  data.address_chosen = "no";
 
   // OS (platform.js)
   if (w?.platform) {
@@ -53,7 +54,47 @@ export function buildBasePageData(params) {
   data.prepop_fname = getQueryParam(params, "fname");
   data.prepop_lname = getQueryParam(params, "lname");
   data.prepop_email = getQueryParam(params, "email");
-  data.prepop_phone = getQueryParam(params, "phone");
+
+  // Normalize phone number: if more than 10 digits, pick last 10. If has country code (+X), keep country code + last 10 digits
+  function normalizePhoneNumber(rawPhone) {
+    if (!rawPhone) return "";
+
+    // Remove all non-digit characters except the leading +
+    const cleaned = rawPhone.replace(/[^\d+]/g, "");
+
+    if (cleaned.startsWith("+")) {
+      // Has country code: extract country code and last 10 digits of the remaining number
+      // Match country code (1-4 digits after +)
+      const countryCodeMatch = cleaned.match(/^\+(\d{1,4})/);
+      if (countryCodeMatch) {
+        const countryCode = countryCodeMatch[1];
+        const digitsAfterCountryCode = cleaned.substring(countryCodeMatch[0].length);
+
+        if (digitsAfterCountryCode.length > 10) {
+          // Take last 10 digits after country code
+          const last10Digits = digitsAfterCountryCode.slice(-10);
+          return `+${countryCode}${last10Digits}`;
+        } else {
+          // 10 or fewer digits, keep as is
+          return cleaned;
+        }
+      } else {
+        // Invalid format, just clean it
+        return cleaned;
+      }
+    } else {
+      // No country code: if more than 10 digits, take last 10
+      const digitsOnly = cleaned.replace(/\D/g, "");
+      if (digitsOnly.length > 10) {
+        return digitsOnly.slice(-10);
+      } else {
+        return digitsOnly;
+      }
+    }
+  }
+
+  data.prepop_phone = normalizePhoneNumber(getQueryParam(params, "phone"));
+
   data.prepop_street = getQueryParam(params, "street");
   data.prepop_city = getQueryParam(params, "city");
   data.prepop_state = getQueryParam(params, "state");

@@ -32,7 +32,7 @@ const Landing = () => {
     status: geolocationStatus,
     coords,
   } = useGeolocation();
-  const { sessionId } = useAlysonSession();
+  useAlysonSession();
   const pageViewFiredRef = useRef(false);
 
   const prefillAddress = (() => {
@@ -61,20 +61,22 @@ const Landing = () => {
     return parts.join(parts.length > 1 ? ", " : "");
   })();
 
-  useEffect(() => {
-    // Ensure page view event fires exactly once
-    if (pageViewFiredRef.current) return;
+  function isValidParam(val) {
+    if (!val || typeof val !== "string") return false;
+    val = decodeURIComponent(val.trim());
 
-    pageViewFiredRef.current = true;
-    trackPageView("Trusted Home Offers", {
-      title: "Trusted Home Offers",
-      url: window.location.href,
-      entry: true,
-      sessionId: sessionId,
-    }).then(() => {
-      setPageViewFired(true);
-    });
-  }, []);
+    // Reject placeholders, empty, or HTML-like values
+    if (
+      val === "" ||
+      val.startsWith("<") ||
+      val.includes("PLACEHOLDER") ||
+      val.includes("placeholder")
+    ) {
+      return false;
+    }
+
+    return true;
+  }
 
   // Request user location as soon as the page loads (only if enabled via environment variable)
   useEffect(() => {
@@ -84,7 +86,76 @@ const Landing = () => {
   }, [requestLocation]);
 
   useEffect(() => {
+    // Ensure page view event fires exactly once
+    if (pageViewFiredRef.current) return;
+
+    // Wait for geolocation permission to be determined (not "unknown")
+    // If geolocation is not enabled, fire immediately
+    if (
+      import.meta.env.VITE_ENABLE_GEOLOCATION &&
+      geolocationPermission === "unknown"
+    ) {
+      return; // Wait for permission to be determined
+    }
+
+    pageViewFiredRef.current = true;
+
+    // Prepare geolocation fields for pageView event
+    const geolocationPermissionValue =
+      geolocationPermission === "granted"
+        ? "allowed"
+        : geolocationPermission === "denied"
+        ? "user_disabled"
+        : geolocationPermission === "prompt"
+        ? "prompt"
+        : geolocationPermission || "unknown";
+
+    setPageData((prev) => {
+      const next = {
+        ...prev,
+        geolocation_permission: geolocationPermissionValue,
+        geolocation_triggered:
+          geolocationPermission === "denied"
+            ? "no"
+            : geolocationStatus !== "idle"
+            ? "yes"
+            : pageData?.geolocation_triggered || "no",
+      };
+      return next;
+    });
+
+    trackPageView(import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers", {
+      title: import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers",
+      url: window.location.href,
+      entry: true,
+      sessionId: window.alysonSessionId,
+      quiz_address: geolocationAddress || pageData?.quiz_address || "",
+      geolocation_address:
+        geolocationAddress || pageData?.geolocation_address || "",
+      geolocation_lat:
+        coords?.latitude?.toString() || pageData?.geolocation_lat || "",
+      geolocation_long:
+        coords?.longitude?.toString() || pageData?.geolocation_long || "",
+      geolocation_permission: geolocationPermissionValue,
+      geolocation_triggered:
+        geolocationPermission === "denied"
+          ? "no"
+          : geolocationStatus !== "idle"
+          ? "yes"
+          : pageData?.geolocation_triggered || "no",
+    }).then(() => {
+      setPageViewFired(true);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geolocationPermission]);
+
+  useEffect(() => {
     if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
+
+    // Wait for geolocation permission to be determined before firing quiz events
+    if (geolocationPermission === "unknown") {
+      return; // Wait for permission to be determined
+    }
 
     if (geolocationStatus === "success" && geolocationAddress && coords) {
       setPageData((prev) => {
@@ -97,6 +168,7 @@ const Landing = () => {
           geolocation_address: geolocationAddress,
           geolocation_lat: coords.latitude?.toString() || "",
           geolocation_long: coords.longitude?.toString() || "",
+          address_chosen: "geolocation",
           geolocation_permission:
             geolocationPermission === "granted"
               ? "allowed"
@@ -105,11 +177,13 @@ const Landing = () => {
               : geolocationPermission === "prompt"
               ? "prompt"
               : geolocationPermission || "unknown",
-          geolocation_triggered: "yes",
+          geolocation_triggered:
+            geolocationPermission === "denied" ? "no" : "yes",
         };
 
         setDefaultEventProperties(next);
 
+        // Only fire quiz events after permission is determined
         trackQuizStart(geolocationAddress, "geolocation");
         trackPartialQuizSubmit(
           geolocationAddress,
@@ -135,7 +209,7 @@ const Landing = () => {
     geolocationStatus,
     geolocationAddress,
     coords,
-    geolocationPermission, // ✅ REQUIRED
+    geolocationPermission,
     setPageData,
   ]);
 
@@ -143,10 +217,16 @@ const Landing = () => {
     <div className="min-h-screen w-full">
       <Header />
       <main>
-        <HeroSection prefillAddress={prefillAddress} pageData={pageData} />
+        <HeroSection
+          prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
+          pageData={pageData}
+        />
         <Steps />
         <Features />
-        <PropertySearch prefillAddress={prefillAddress} pageData={pageData} />
+        <PropertySearch
+          prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
+          pageData={pageData}
+        />
         <ClientStory />
         <Testimonials />
         <ComparisonTable />

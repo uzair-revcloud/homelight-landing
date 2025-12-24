@@ -11,7 +11,7 @@ export default function Footer() {
                     <div className="col-xs-12">
                         <ul className="last-details" style={{ margin: "0 !important" }}>
                             <li className="flex flex-wrap items-center justify-center gap-2">
-                                <span>© Trusted Home Offers Inc., 30 N Gould St, Ste 26362, Sheridan, Wyoming, United States 82801</span>
+                                <span>© {import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers"} Inc., 30 N Gould St, Ste 26362, Sheridan, Wyoming, United States 82801</span>
                                 <span className="text-gray-300 hidden sm:inline">|</span>
                                 <span className="tos">
                                     <a 
