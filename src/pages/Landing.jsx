@@ -22,7 +22,7 @@ import { buildRedirectUrl } from "../utils/buildRedirectUrl";
 import { useGeolocationPermission } from "../hooks/useGeoLocationPermission.jsx";
 
 const Landing = () => {
-  const [params, setParams] = useSearchParams();
+  const [params, _] = useSearchParams();
   const [pageViewFired, setPageViewFired] = useState(false);
   const { pageData, setPageData } = usePageData(params, { pageViewFired });
   const geolocationPermission = useGeolocationPermission();
@@ -83,51 +83,6 @@ const Landing = () => {
     }
   }, [requestLocation]);
 
-  // Handle geolocation success: update pageData, fire quiz events, and redirect
-  // useEffect(() => {
-  //   // Only handle geolocation if enabled via environment variable
-  //   if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
-
-  //   if (geolocationStatus === "success" && geolocationAddress) {
-  //     // Update pageData with the geolocation address and trigger redirect
-  //     setPageData((prev) => {
-  //       const next = {
-  //         ...prev,
-  //         prepop_address: geolocationAddress,
-  //         geolocation_address: geolocationAddress,
-  //         geolocation_lat: coords?.latitude?.toString() || "",
-  //         geolocation_long: coords?.longitude?.toString() || "",
-  //         geolocation_permission: geolocationPermission || "",
-  //         geolocation_triggered: "yes",
-  //       };
-  //       setDefaultEventProperties(next);
-
-  //       // Fire quiz events with the address
-  //       trackQuizStart(geolocationAddress, "geolocation");
-  //       trackPartialQuizSubmit(
-  //         geolocationAddress,
-  //         geolocationAddress,
-  //         "geolocation"
-  //       );
-
-  //       // Trigger redirect with the address
-  //       const redirectUrl = buildRedirectUrl(
-  //         {
-  //           address: geolocationAddress,
-  //           phone: pageData?.prepop_phone || "",
-  //           name: pageData?.prepop_name || "",
-  //         },
-  //         "https://www.homelight.com/simple-sale/quiz"
-  //       );
-
-  //       // window.location.href = redirectUrl;
-  //       window.open(redirectUrl, "_blank");
-
-  //       return next;
-  //     });
-  //   }
-  // }, [geolocationStatus, geolocationAddress]);
-
   useEffect(() => {
     if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
 
@@ -138,6 +93,7 @@ const Landing = () => {
 
           // ✅ geolocation fields
           quiz_address: geolocationAddress,
+          prepop_address: geolocationAddress,
           geolocation_address: geolocationAddress,
           geolocation_lat: coords.latitude?.toString() || "",
           geolocation_long: coords.longitude?.toString() || "",

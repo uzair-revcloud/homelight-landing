@@ -22,7 +22,7 @@ export function useGeolocationPermission() {
         permissionStatus = status;
 
         // Initial state
-        setPermission(status.state); // granted | prompt | denied
+        setPermission(status.state);
 
         // Listen for changes
         status.onchange = () => {
