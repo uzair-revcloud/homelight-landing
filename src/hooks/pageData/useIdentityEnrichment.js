@@ -45,9 +45,6 @@ export function useIdentityEnrichment({ pageData, setPageData, setDefaultEventPr
                 const data = await response.json();
                 const identityResp = data.data?.[0];
 
-                // Create URL object to update search params
-                const url = new URL(window.location.href);
-                let urlUpdated = false;
 
                 setPageData((prev) => {
                     const next = { ...prev };
@@ -63,24 +60,16 @@ export function useIdentityEnrichment({ pageData, setPageData, setDefaultEventPr
                     const apiSource = data.data?.[0]?._source;
                     if (apiSource) {
                         if (!next.prepop_name && apiSource.name) {
-                            next.prepop_name = apiSource.name;
-                            url.searchParams.set("name", apiSource.name);
-                            urlUpdated = true;
+                            next.quiz_name = apiSource.name;
                         }
                         if (!next.prepop_email && apiSource.email) {
-                            next.prepop_email = apiSource.email;
-                            url.searchParams.set("email", apiSource.email);
-                            urlUpdated = true;
+                            next.quiz_email = apiSource.email;
                         }
                         if (!next.prepop_phone && apiSource.phone) {
-                            next.prepop_phone = apiSource.phone;
-                            url.searchParams.set("phone", apiSource.phone);
-                            urlUpdated = true;
+                            next.quiz_phone = apiSource.phone;
                         }
                         if (!next.prepop_address && apiSource.address) {
-                            next.prepop_address = apiSource.address;
-                            url.searchParams.set("address", apiSource.address);
-                            urlUpdated = true;
+                            next.quiz_address = apiSource.address;
                         }
                     }
 
@@ -93,10 +82,6 @@ export function useIdentityEnrichment({ pageData, setPageData, setDefaultEventPr
                             : "partial_data_present";
 
                     setDefaultEventProperties(next);
-                    // Update browser URL if any params were added
-                    if (urlUpdated && url.href !== window.location.href) {
-                        window.history.replaceState({}, "", url.href);
-                    }
                     return next;
                 });
 

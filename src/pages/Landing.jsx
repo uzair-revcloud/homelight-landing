@@ -1,32 +1,37 @@
-import { useEffect, useState, useRef } from "react";
-import Header from "../components/layout/Header";
-import HeroSection from "../components/sections/Hero";
-import React from "react";
-import Footer from "../components/layout/Footer";
-import FAQs from "../components/sections/FAQs";
-import { FAQS_LIST } from "../constants/lists";
-import RecentlySoldCarousel from "../components/sections/RecentlySoldCarousel";
-import ComparisonTable from "../components/sections/ComparisonTable";
-import Testimonials from "../components/sections/Testimonials";
-import ClientStory from "../components/sections/ClientStory";
-import Features from "../components/sections/Features";
-import PropertySearch from "../components/sections/PropertySearch";
-import Steps from "../components/sections/Steps";
-import { trackPageView } from "../analytics/track.js";
-import { EVENTS } from "../analytics/events.js";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { usePageData } from "../hooks/usePageData.jsx";
-import { useGeolocation } from "../hooks/useGeolocation.js";
-import { useAlysonSession } from "../hooks/useAlysonSession.js";
-import { trackQuizStart, trackPartialQuizSubmit } from "../analytics/quiz";
-import { buildRedirectUrl } from "../utils/buildRedirectUrl";
+import { trackPartialQuizSubmit, trackQuizStart } from "../analytics/quiz";
 import { setDefaultEventProperties } from "../analytics/track";
+import { trackPageView } from "../analytics/track.js";
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
+import ClientStory from "../components/sections/ClientStory";
+import ComparisonTable from "../components/sections/ComparisonTable";
+import FAQs from "../components/sections/FAQs";
+import Features from "../components/sections/Features";
+import HeroSection from "../components/sections/Hero";
+import PropertySearch from "../components/sections/PropertySearch";
+import RecentlySoldCarousel from "../components/sections/RecentlySoldCarousel";
+import Steps from "../components/sections/Steps";
+import Testimonials from "../components/sections/Testimonials";
+import { FAQS_LIST } from "../constants/lists";
+import { useAlysonSession } from "../hooks/useAlysonSession.js";
+import { useGeolocation } from "../hooks/useGeolocation.js";
+import { usePageData } from "../hooks/usePageData.jsx";
+import { buildRedirectUrl } from "../utils/buildRedirectUrl";
+import { useGeolocationPermission } from "../hooks/useGeoLocationPermission.jsx";
 
 const Landing = () => {
   const [params, setParams] = useSearchParams();
   const [pageViewFired, setPageViewFired] = useState(false);
   const { pageData, setPageData } = usePageData(params, { pageViewFired });
-  const { requestLocation, address: geolocationAddress, status: geolocationStatus, coords } = useGeolocation();
+  const geolocationPermission = useGeolocationPermission();
+  const {
+    requestLocation,
+    address: geolocationAddress,
+    status: geolocationStatus,
+    coords,
+  } = useGeolocation();
   const { sessionId } = useAlysonSession();
   const pageViewFiredRef = useRef(false);
 
@@ -38,7 +43,7 @@ const Landing = () => {
     const zip = clean(pageData?.prepop_zip);
     const address = clean(pageData?.prepop_address);
 
-    if (address) return address;
+    if (address && (!street || !city || !state || !zip)) return address;
 
     const parts = [];
     if (street) parts.push(street);
@@ -48,7 +53,9 @@ const Landing = () => {
     if (state) localityParts.push(state);
     const locality = localityParts.join(", ");
 
-    const tail = [locality, zip].filter(Boolean).join(locality && zip ? " " : "");
+    const tail = [locality, zip]
+      .filter(Boolean)
+      .join(locality && zip ? " " : "");
     if (tail) parts.push(tail);
 
     return parts.join(parts.length > 1 ? ", " : "");
@@ -57,12 +64,13 @@ const Landing = () => {
   useEffect(() => {
     // Ensure page view event fires exactly once
     if (pageViewFiredRef.current) return;
-    
+
     pageViewFiredRef.current = true;
     trackPageView("Trusted Home Offers", {
       title: "Trusted Home Offers",
       url: window.location.href,
       entry: true,
+      sessionId: sessionId,
     }).then(() => {
       setPageViewFired(true);
     });
@@ -76,36 +84,104 @@ const Landing = () => {
   }, [requestLocation]);
 
   // Handle geolocation success: update pageData, fire quiz events, and redirect
+  // useEffect(() => {
+  //   // Only handle geolocation if enabled via environment variable
+  //   if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
+
+  //   if (geolocationStatus === "success" && geolocationAddress) {
+  //     // Update pageData with the geolocation address and trigger redirect
+  //     setPageData((prev) => {
+  //       const next = {
+  //         ...prev,
+  //         prepop_address: geolocationAddress,
+  //         geolocation_address: geolocationAddress,
+  //         geolocation_lat: coords?.latitude?.toString() || "",
+  //         geolocation_long: coords?.longitude?.toString() || "",
+  //         geolocation_permission: geolocationPermission || "",
+  //         geolocation_triggered: "yes",
+  //       };
+  //       setDefaultEventProperties(next);
+
+  //       // Fire quiz events with the address
+  //       trackQuizStart(geolocationAddress, "geolocation");
+  //       trackPartialQuizSubmit(
+  //         geolocationAddress,
+  //         geolocationAddress,
+  //         "geolocation"
+  //       );
+
+  //       // Trigger redirect with the address
+  //       const redirectUrl = buildRedirectUrl(
+  //         {
+  //           address: geolocationAddress,
+  //           phone: pageData?.prepop_phone || "",
+  //           name: pageData?.prepop_name || "",
+  //         },
+  //         "https://www.homelight.com/simple-sale/quiz"
+  //       );
+
+  //       // window.location.href = redirectUrl;
+  //       window.open(redirectUrl, "_blank");
+
+  //       return next;
+  //     });
+  //   }
+  // }, [geolocationStatus, geolocationAddress]);
+
   useEffect(() => {
-    // Only handle geolocation if enabled via environment variable
     if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
-    
-    if (geolocationStatus === "success" && geolocationAddress) {
-      // Update pageData with the geolocation address and trigger redirect
+
+    if (geolocationStatus === "success" && geolocationAddress && coords) {
       setPageData((prev) => {
         const next = {
           ...prev,
-          prepop_address: geolocationAddress,
+
+          // ✅ geolocation fields
+          quiz_address: geolocationAddress,
+          geolocation_address: geolocationAddress,
+          geolocation_lat: coords.latitude?.toString() || "",
+          geolocation_long: coords.longitude?.toString() || "",
+          geolocation_permission:
+            geolocationPermission === "granted"
+              ? "allowed"
+              : geolocationPermission === "denied"
+              ? "user_disabled"
+              : geolocationPermission === "prompt"
+              ? "prompt"
+              : geolocationPermission || "unknown",
+          geolocation_triggered: "yes",
         };
+
         setDefaultEventProperties(next);
 
-        // Fire quiz events with the address
         trackQuizStart(geolocationAddress, "geolocation");
-        trackPartialQuizSubmit(geolocationAddress, geolocationAddress, "geolocation");
+        trackPartialQuizSubmit(
+          geolocationAddress,
+          geolocationAddress,
+          "geolocation"
+        );
 
-        // Trigger redirect with the address
-        const redirectUrl = buildRedirectUrl({
-          address: geolocationAddress,
-          phone: pageData?.prepop_phone || "",
-          name: pageData?.prepop_name || "",
-        }, "https://www.homelight.com/simple-sale/quiz");
-        
+        const redirectUrl = buildRedirectUrl(
+          {
+            address: geolocationAddress,
+            phone: prev?.prepop_phone || "",
+            name: prev?.prepop_name || "",
+          },
+          "https://www.homelight.com/simple-sale/quiz"
+        );
+
         window.location.href = redirectUrl;
 
         return next;
       });
     }
-  }, [geolocationStatus, geolocationAddress, setPageData]);
+  }, [
+    geolocationStatus,
+    geolocationAddress,
+    coords,
+    geolocationPermission, // ✅ REQUIRED
+    setPageData,
+  ]);
 
   return (
     <div className="min-h-screen w-full">
