@@ -40,11 +40,15 @@ const InputWithButton = ({
       },
       "https://www.homelight.com/simple-sale/quiz"
     );
-    // window.location.href = redirectUrl;
-    window.open(redirectUrl, "_blank");
+    window.location.href = redirectUrl;
+    // window.open(redirectUrl, "_blank");
   };
 
   const handleSubmit = async (e) => {
+    if (!inputValue) {
+      alert("Please enter an address");
+      return;
+    }
     if (e && e.preventDefault) e.preventDefault();
     if (typeof onSubmit === "function") onSubmit(inputValue);
     setShowDropdown(false);
@@ -137,7 +141,7 @@ const InputWithButton = ({
 
   return (
     <form
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
       className={`flex flex-col md:flex-row md:items-center ${className}`}
     >
       <div

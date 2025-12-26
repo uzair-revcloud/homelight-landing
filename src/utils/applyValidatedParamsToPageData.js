@@ -1,10 +1,10 @@
 // Normalize phone number: if more than 10 digits, pick last 10. If has country code (+X), keep country code + last 10 digits
 function normalizePhoneNumber(rawPhone) {
     if (!rawPhone) return "";
-    
+
     // Remove all non-digit characters except the leading +
     const cleaned = rawPhone.replace(/[^\d+]/g, "");
-    
+
     if (cleaned.startsWith("+")) {
         // Has country code: extract country code and last 10 digits of the remaining number
         // Match country code (1-4 digits after +)
@@ -12,7 +12,7 @@ function normalizePhoneNumber(rawPhone) {
         if (countryCodeMatch) {
             const countryCode = countryCodeMatch[1];
             const digitsAfterCountryCode = cleaned.substring(countryCodeMatch[0].length);
-            
+
             if (digitsAfterCountryCode.length > 10) {
                 // Take last 10 digits after country code
                 const last10Digits = digitsAfterCountryCode.slice(-10);

@@ -208,8 +208,8 @@ const Landing = () => {
             "https://www.homelight.com/simple-sale/quiz"
           );
 
-          // window.location.href = redirectUrl;
-          window.open(redirectUrl, "_blank");
+          window.location.href = redirectUrl;
+          // window.open(redirectUrl, "_blank");
 
           return next;
         });
