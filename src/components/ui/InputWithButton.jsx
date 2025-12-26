@@ -13,6 +13,7 @@ const InputWithButton = ({
   maxWidth = "max-w-xl",
   mapboxToken,
   pageData = {},
+  callIdentityAPIWithAddress,
 }) => {
   const [inputValue, setInputValue] = useState(value || "");
   const [suggestions, setSuggestions] = useState([]);
@@ -35,23 +36,32 @@ const InputWithButton = ({
         address: address || inputValue || "",
         name: pageData?.prepop_name || "",
         phone: pageData?.prepop_phone || "",
+        email: pageData?.prepop_email || "",
       },
       "https://www.homelight.com/simple-sale/quiz"
     );
-    window.location.href = redirectUrl;
+    // window.location.href = redirectUrl;
+    window.open(redirectUrl, "_blank");
   };
 
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (typeof onSubmit === "function") onSubmit(inputValue);
     setShowDropdown(false);
-    setIsLoading(false);
+    setIsLoading(true);
+
+    // Call identity API with the new address (takes final precedence)
+    if (callIdentityAPIWithAddress && inputValue) {
+      await callIdentityAPIWithAddress(inputValue);
+    }
+
     await trackQuizStart(inputValue, "address_search", {
       address_chosen: "manual",
     });
     await trackPartialQuizSubmit(inputValue, inputValue, "address_search", {
       address_chosen: "manual",
     });
+    setIsLoading(false);
     handleRedirect(inputValue);
   };
 
@@ -103,6 +113,13 @@ const InputWithButton = ({
   const handleSelectSuggestion = async (place) => {
     setInputValue(place.place_name);
     setShowDropdown(false);
+    setIsLoading(true);
+
+    // Call identity API with the selected address (takes final precedence)
+    if (callIdentityAPIWithAddress && place.place_name) {
+      await callIdentityAPIWithAddress(place.place_name);
+    }
+
     // Fire both quiz events when user selects from dropdown
     await trackQuizStart(place.place_name, "address_search", {
       address_chosen: "dropdown",
@@ -113,6 +130,7 @@ const InputWithButton = ({
       "address_search",
       { address_chosen: "dropdown" }
     );
+    setIsLoading(false);
     // Redirect to checkout URL with encoded params
     handleRedirect(place.place_name);
   };

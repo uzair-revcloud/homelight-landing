@@ -17,7 +17,11 @@ export function usePageData(params, options = {}) {
 
   useAsyncEnrichments({ setPageData, setDefaultEventProperties });
 
-  useIdentityEnrichment({ pageData, setPageData, setDefaultEventProperties });
+  const { callIdentityAPIWithAddress } = useIdentityEnrichment({
+    pageData,
+    setPageData,
+    setDefaultEventProperties,
+  });
 
   useValidatedLandingPage({
     pageViewFired,
@@ -26,5 +30,5 @@ export function usePageData(params, options = {}) {
     setDefaultEventProperties,
   });
 
-  return { pageData, setPageData };
+  return { pageData, setPageData, callIdentityAPIWithAddress };
 }

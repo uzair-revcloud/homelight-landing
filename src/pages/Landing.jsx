@@ -24,7 +24,10 @@ import { useGeolocationPermission } from "../hooks/useGeoLocationPermission.jsx"
 const Landing = () => {
   const [params, _] = useSearchParams();
   const [pageViewFired, setPageViewFired] = useState(false);
-  const { pageData, setPageData } = usePageData(params, { pageViewFired });
+  const { pageData, setPageData, callIdentityAPIWithAddress } = usePageData(
+    params,
+    { pageViewFired }
+  );
   const geolocationPermission = useGeolocationPermission();
   const {
     requestLocation,
@@ -150,61 +153,70 @@ const Landing = () => {
   }, [geolocationPermission]);
 
   useEffect(() => {
-    if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
+    const run = async () => {
+      if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
 
-    // Wait for geolocation permission to be determined before firing quiz events
-    if (geolocationPermission === "unknown") {
-      return; // Wait for permission to be determined
-    }
+      // Wait for geolocation permission to be determined before firing quiz events
+      if (geolocationPermission === "unknown") {
+        return; // Wait for permission to be determined
+      }
 
-    if (geolocationStatus === "success" && geolocationAddress && coords) {
-      setPageData((prev) => {
-        const next = {
-          ...prev,
-
-          // ✅ geolocation fields
-          quiz_address: geolocationAddress,
-          prepop_address: geolocationAddress,
-          geolocation_address: geolocationAddress,
-          geolocation_lat: coords.latitude?.toString() || "",
-          geolocation_long: coords.longitude?.toString() || "",
-          address_chosen: "geolocation",
-          geolocation_permission:
-            geolocationPermission === "granted"
-              ? "allowed"
-              : geolocationPermission === "denied"
-              ? "user_disabled"
-              : geolocationPermission === "prompt"
-              ? "prompt"
-              : geolocationPermission || "unknown",
-          geolocation_triggered:
-            geolocationPermission === "denied" ? "no" : "yes",
-        };
-
-        setDefaultEventProperties(next);
-
-        // Only fire quiz events after permission is determined
-        trackQuizStart(geolocationAddress, "geolocation");
-        trackPartialQuizSubmit(
-          geolocationAddress,
-          geolocationAddress,
-          "geolocation"
+      if (geolocationStatus === "success" && geolocationAddress && coords) {
+        const identityResp = await callIdentityAPIWithAddress(
+          geolocationAddress
         );
+        setPageData((prev) => {
+          const next = {
+            ...prev,
+            ...identityResp,
+            // ✅ geolocation fields
+            quiz_address: geolocationAddress,
+            prepop_address: geolocationAddress,
+            geolocation_address: geolocationAddress,
+            geolocation_lat: coords.latitude?.toString() || "",
+            geolocation_long: coords.longitude?.toString() || "",
+            address_chosen: "geolocation",
+            geolocation_permission:
+              geolocationPermission === "granted"
+                ? "allowed"
+                : geolocationPermission === "denied"
+                ? "user_disabled"
+                : geolocationPermission === "prompt"
+                ? "prompt"
+                : geolocationPermission || "unknown",
+            geolocation_triggered:
+              geolocationPermission === "denied" ? "no" : "yes",
+          };
 
-        const redirectUrl = buildRedirectUrl(
-          {
-            address: geolocationAddress,
-            phone: prev?.prepop_phone || "",
-            name: prev?.prepop_name || "",
-          },
-          "https://www.homelight.com/simple-sale/quiz"
-        );
+          setDefaultEventProperties(next);
 
-        window.location.href = redirectUrl;
+          // Only fire quiz events after permission is determined
+          trackQuizStart(geolocationAddress, "geolocation");
+          trackPartialQuizSubmit(
+            geolocationAddress,
+            geolocationAddress,
+            "geolocation"
+          );
 
-        return next;
-      });
-    }
+          const redirectUrl = buildRedirectUrl(
+            {
+              address: geolocationAddress,
+              phone: prev?.prepop_phone || "",
+              name: prev?.prepop_name || "",
+              email: prev?.prepop_email || "",
+            },
+            "https://www.homelight.com/simple-sale/quiz"
+          );
+
+          // window.location.href = redirectUrl;
+          window.open(redirectUrl, "_blank");
+
+          return next;
+        });
+      }
+    };
+
+    run();
   }, [
     geolocationStatus,
     geolocationAddress,
@@ -220,12 +232,14 @@ const Landing = () => {
         <HeroSection
           prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
           pageData={pageData}
+          callIdentityAPIWithAddress={callIdentityAPIWithAddress}
         />
         <Steps />
         <Features />
         <PropertySearch
           prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
           pageData={pageData}
+          callIdentityAPIWithAddress={callIdentityAPIWithAddress}
         />
         <ClientStory />
         <Testimonials />
