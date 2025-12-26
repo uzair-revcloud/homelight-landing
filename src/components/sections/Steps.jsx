@@ -65,8 +65,9 @@ export default function Steps() {
           4 EASY STEPS
         </div>
         <h2 className="text-3xl font-bold mt-4">
-          How <br className="md:hidden" /> {import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers"}<sup>®</sup>{" "}
-          Works
+          How <br className="md:hidden" />{" "}
+          {import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers"}
+          <sup>®</sup> Works
         </h2>
         <p className="text-lg mt-4 max-w-4xl mx-auto">
           Compare the top real estate agents and the largest investor network to
@@ -135,6 +136,9 @@ export default function Steps() {
                   src={step.icon}
                   alt=""
                   className="w-full h-full object-contain"
+                  loading="lazy"
+                  width="112"
+                  height="112"
                 />
               </div>
               <div className="max-w-xl">
@@ -250,7 +254,14 @@ export default function Steps() {
 
               <div className="grid grid-cols-3 gap-4 md:gap-8 mt-6">
                 {investorLogos.map((logo, i) => (
-                  <img key={i} src={logo} alt="logo" />
+                  <img
+                    key={i}
+                    src={logo}
+                    alt="logo"
+                    loading="lazy"
+                    width="120"
+                    height="60"
+                  />
                 ))}
               </div>
             </div>
@@ -265,7 +276,13 @@ export default function Steps() {
               <div className="grid grid-cols-3 gap-4 md:gap-8 mt-10 md:mt-14 ">
                 {agentLogos.map((logo, i) => (
                   <span className="mr-0 md:mr-6" key={i}>
-                    <img src={logo} alt="logo" />
+                    <img
+                      src={logo}
+                      alt="logo"
+                      loading="lazy"
+                      width="120"
+                      height="60"
+                    />
                   </span>
                 ))}
               </div>
@@ -328,6 +345,9 @@ export default function Steps() {
                 src="https://d1xt9s86fx9r45.cloudfront.net/assets/hl-production/packs/media/components/icons/cash-b773a84789521953cac0fce23ac8d8f7.png"
                 alt=""
                 className="w-full h-full object-contain"
+                loading="lazy"
+                width="80"
+                height="80"
               />
             </div>
             <div className="max-w-xl">

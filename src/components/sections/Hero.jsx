@@ -38,6 +38,9 @@ const HeroSection = ({
             src="/hero.webp"
             alt="Hero Illustration"
             className="w-full max-w-2xl"
+            width="800"
+            height="600"
+            fetchPriority="high"
           />
         </div>
       </section>

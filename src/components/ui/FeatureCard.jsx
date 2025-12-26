@@ -5,7 +5,7 @@ export function FeatureCard({ icon, title, description }) {
         <div className="bg-white rounded-xl shadow-xs p-8 border border-gray-100">
             {/* Icon */}
             <div className="w-20 h-20 mb-6">
-                <img src={icon} alt="" className="w-full h-full object-contain" />
+                <img src={icon} alt="" className="w-full h-full object-contain" loading="lazy" width="80" height="80" />
             </div>
 
             {/* Title */}

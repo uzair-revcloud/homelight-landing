@@ -10,6 +10,9 @@ export default function ClientCard({ image, name, role, quote }) {
                     src={image}
                     alt={name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    width="128"
+                    height="128"
                 />
             </div>
 

@@ -25,6 +25,9 @@ const Header = () => {
           src={`${import.meta.env.VITE_BRAND_LOGO}`}
           className="w-32 md:w-40 lg:w-44"
           alt={strings.company_name}
+          width="176"
+          height="60"
+          fetchPriority="high"
         />
       </div>
 

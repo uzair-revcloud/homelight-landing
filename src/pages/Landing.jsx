@@ -1,20 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import { trackPartialQuizSubmit, trackQuizStart } from "../analytics/quiz";
 import { setDefaultEventProperties } from "../analytics/track";
 import { trackPageView } from "../analytics/track.js";
-import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import ClientStory from "../components/sections/ClientStory";
-import ComparisonTable from "../components/sections/ComparisonTable";
-import FAQs from "../components/sections/FAQs";
-import Features from "../components/sections/Features";
 import HeroSection from "../components/sections/Hero";
-import PropertySearch from "../components/sections/PropertySearch";
-import RecentlySoldCarousel from "../components/sections/RecentlySoldCarousel";
-import Steps from "../components/sections/Steps";
-import Testimonials from "../components/sections/Testimonials";
 import { FAQS_LIST } from "../constants/lists";
+import {
+  Steps,
+  Features,
+  PropertySearch,
+  ClientStory,
+  Testimonials,
+  ComparisonTable,
+  RecentlySoldCarousel,
+  FAQs,
+  Footer,
+} from "../components/lazyComponents";
 import { useAlysonSession } from "../hooks/useAlysonSession.js";
 import { useGeolocation } from "../hooks/useGeolocation.js";
 import { usePageData } from "../hooks/usePageData.jsx";
@@ -234,20 +236,38 @@ const Landing = () => {
           pageData={pageData}
           callIdentityAPIWithAddress={callIdentityAPIWithAddress}
         />
-        <Steps />
-        <Features />
-        <PropertySearch
-          prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
-          pageData={pageData}
-          callIdentityAPIWithAddress={callIdentityAPIWithAddress}
-        />
-        <ClientStory />
-        <Testimonials />
-        <ComparisonTable />
-        <RecentlySoldCarousel />
-        <FAQs faqs={FAQS_LIST} />
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <Steps />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <Features />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <PropertySearch
+            prefillAddress={isValidParam(prefillAddress) ? prefillAddress : ""}
+            pageData={pageData}
+            callIdentityAPIWithAddress={callIdentityAPIWithAddress}
+          />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <ClientStory />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <Testimonials />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <ComparisonTable />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <RecentlySoldCarousel />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <FAQs faqs={FAQS_LIST} />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

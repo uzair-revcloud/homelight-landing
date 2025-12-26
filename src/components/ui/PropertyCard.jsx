@@ -4,10 +4,15 @@ const PropertyCard = ({ price, address, beds, baths, sqft, daysSold, image }) =>
     return (
         <div className="relative rounded-lg overflow-hidden shadow-lg bg-gray-800 text-white min-w-[300px] max-w-[350px] h-[280px] flex-shrink-0">
             {/* Background Image */}
-            <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
-            >
+            <div className="absolute inset-0">
+                <img
+                    src={image}
+                    alt={address}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    width="350"
+                    height="280"
+                />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/80"></div>
             </div>
 
