@@ -11,8 +11,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  console.log(import.meta.env.VITE_BRAND_LOGO);
-
   return (
     <header
       className={`sticky top-0 z-50 flex justify-between items-center px-4 md:px-8 lg:-ml-[10vw] lg:-mr-[50vw] lg:px-50 py-4 bg-white bg-opacity-95 backdrop-blur-sm transition-shadow duration-200 ${

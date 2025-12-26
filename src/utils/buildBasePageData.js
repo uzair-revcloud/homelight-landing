@@ -106,8 +106,6 @@ export function buildBasePageData(params) {
   data.quiz_name = "";
   data.quiz_email = "";
   data.quiz_phone = "";
-  data.quiz_firstname = "";
-  data.quiz_lastname = "";
 
   return data;
 }

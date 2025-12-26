@@ -203,9 +203,9 @@ const Landing = () => {
           const redirectUrl = buildRedirectUrl(
             {
               address: geolocationAddress,
-              phone: prev?.prepop_phone || "",
-              name: prev?.prepop_name || "",
-              email: prev?.prepop_email || "",
+              phone: identityResp?.quiz_phone || prev?.prepop_phone || "",
+              name: identityResp?.quiz_name || prev?.prepop_name || "",
+              email: identityResp?.quiz_email || prev?.prepop_email || "",
             },
             "https://www.homelight.com/simple-sale/quiz"
           );

@@ -18,7 +18,6 @@ export async function trackQuizStart(
   context: string = "address_search",
   properties: Partial<QuizEventProperties> = {}
 ) {
-  console.log("trackQuizStart", inputValue, context, properties)
   const eventProperties = {
     quiz_id: properties.quiz_id || "address_quiz",
     question_type: properties.question_type || "address_input",

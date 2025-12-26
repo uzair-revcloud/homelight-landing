@@ -27,21 +27,21 @@ const InputWithButton = ({
     setInputValue((prev) => (prev ? prev : value));
   }, [value]);
 
-  const handleRedirect = (address) => {
+  const handleRedirect = (address, identityResp) => {
     if (isLoading) return; // Prevent multiple redirects
 
     setIsLoading(true);
     const redirectUrl = buildRedirectUrl(
       {
         address: address || inputValue || "",
-        name: pageData?.prepop_name || "",
-        phone: pageData?.prepop_phone || "",
-        email: pageData?.prepop_email || "",
+        name: identityResp?.quiz_name || pageData?.prepop_name || "",
+        phone: identityResp?.quiz_phone || pageData?.prepop_phone || "",
+        email: identityResp?.quiz_email || pageData?.prepop_email || "",
       },
       "https://www.homelight.com/simple-sale/quiz"
     );
-    window.location.href = redirectUrl;
-    // window.open(redirectUrl, "_blank");
+    // window.location.href = redirectUrl;
+    window.open(redirectUrl, "_blank");
   };
 
   const handleSubmit = async (e) => {
@@ -55,18 +55,21 @@ const InputWithButton = ({
     setIsLoading(true);
 
     // Call identity API with the new address (takes final precedence)
+    let identityResp = {};
     if (callIdentityAPIWithAddress && inputValue) {
-      await callIdentityAPIWithAddress(inputValue);
+      identityResp = await callIdentityAPIWithAddress(inputValue);
     }
 
     await trackQuizStart(inputValue, "address_search", {
       address_chosen: "manual",
+      ...identityResp,
     });
     await trackPartialQuizSubmit(inputValue, inputValue, "address_search", {
       address_chosen: "manual",
+      ...identityResp,
     });
     setIsLoading(false);
-    handleRedirect(inputValue);
+    handleRedirect(inputValue, identityResp);
   };
 
   // Fetch suggestions from Mapbox API
@@ -120,23 +123,25 @@ const InputWithButton = ({
     setIsLoading(true);
 
     // Call identity API with the selected address (takes final precedence)
+    let identityResp = {};
     if (callIdentityAPIWithAddress && place.place_name) {
-      await callIdentityAPIWithAddress(place.place_name);
+      identityResp = await callIdentityAPIWithAddress(place.place_name);
     }
 
     // Fire both quiz events when user selects from dropdown
     await trackQuizStart(place.place_name, "address_search", {
       address_chosen: "dropdown",
+      ...identityResp,
     });
     await trackPartialQuizSubmit(
       place.place_name,
       inputValue,
       "address_search",
-      { address_chosen: "dropdown" }
+      { address_chosen: "dropdown", ...identityResp }
     );
     setIsLoading(false);
     // Redirect to checkout URL with encoded params
-    handleRedirect(place.place_name);
+    handleRedirect(place.place_name, identityResp);
   };
 
   return (
