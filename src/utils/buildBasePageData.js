@@ -49,6 +49,10 @@ export function buildBasePageData(params) {
   data.fbclid = getQueryParam(params, "fbclid");
   data.gclid = getQueryParam(params, "gclid");
 
+  // ---------- Experiment ID ----------
+  const eid = getQueryParam(params, "eid") || 28;
+  data.experiment_id = eid;
+
   // ---------- Prepop fields ----------
   data.prepop_name = getQueryParam(params, "name");
   data.prepop_fname = getQueryParam(params, "fname");

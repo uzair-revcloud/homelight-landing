@@ -40,8 +40,8 @@ const InputWithButton = ({
       },
       "https://www.homelight.com/simple-sale/quiz"
     );
-    // window.location.href = redirectUrl;
-    window.open(redirectUrl, "_blank");
+    window.location.href = redirectUrl;
+    // window.open(redirectUrl, "_blank");
   };
 
   const handleSubmit = async (e) => {
