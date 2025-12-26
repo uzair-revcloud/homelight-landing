@@ -40,7 +40,9 @@ const HeroSection = ({
             className="w-full max-w-2xl"
             width="800"
             height="600"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 665px"
             fetchPriority="high"
+            decoding="async"
           />
         </div>
       </section>

@@ -27,7 +27,9 @@ const Header = () => {
           alt={strings.company_name}
           width="176"
           height="60"
+          sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 176px"
           fetchPriority="high"
+          decoding="async"
         />
       </div>
 

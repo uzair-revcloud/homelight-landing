@@ -12,6 +12,8 @@ const PropertyCard = ({ price, address, beds, baths, sqft, daysSold, image }) =>
                     loading="lazy"
                     width="350"
                     height="280"
+                    sizes="(max-width: 768px) 300px, 350px"
+                    decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/80"></div>
             </div>

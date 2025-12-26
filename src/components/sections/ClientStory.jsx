@@ -36,6 +36,8 @@ export default function ClientStory() {
               loading="lazy"
               width="625"
               height="380"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 625px"
+              decoding="async"
             />
           ) : (
             <iframe

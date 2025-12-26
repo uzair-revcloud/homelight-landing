@@ -139,6 +139,8 @@ export default function Steps() {
                   loading="lazy"
                   width="112"
                   height="112"
+                  sizes="112px"
+                  decoding="async"
                 />
               </div>
               <div className="max-w-xl">
@@ -261,6 +263,8 @@ export default function Steps() {
                     loading="lazy"
                     width="120"
                     height="60"
+                    sizes="(max-width: 768px) 33vw, 120px"
+                    decoding="async"
                   />
                 ))}
               </div>
@@ -282,6 +286,8 @@ export default function Steps() {
                       loading="lazy"
                       width="120"
                       height="60"
+                      sizes="(max-width: 768px) 33vw, 120px"
+                      decoding="async"
                     />
                   </span>
                 ))}
@@ -348,6 +354,8 @@ export default function Steps() {
                 loading="lazy"
                 width="80"
                 height="80"
+                sizes="80px"
+                decoding="async"
               />
             </div>
             <div className="max-w-xl">

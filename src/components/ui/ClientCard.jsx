@@ -13,6 +13,8 @@ export default function ClientCard({ image, name, role, quote }) {
                     loading="lazy"
                     width="128"
                     height="128"
+                    sizes="128px"
+                    decoding="async"
                 />
             </div>
 
