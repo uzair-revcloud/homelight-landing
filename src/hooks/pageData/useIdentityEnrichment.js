@@ -7,6 +7,9 @@ export async function callIdentityAPI({
     setDefaultEventProperties,
     overrideAddress = null
 }) {
+    // Only call API if enabled via environment variable
+    if (!import.meta.env.VITE_ENABLE_IDENTITY_API) return;
+
     // Get current pageData from the getter function
     const currentPageData = getPageData ? getPageData() : {};
 
@@ -119,6 +122,9 @@ export function useIdentityEnrichment({ pageData, setPageData, setDefaultEventPr
     }, [setPageData, setDefaultEventProperties]);
 
     useEffect(() => {
+        // Only call API if enabled via environment variable
+        if (!import.meta.env.VITE_ENABLE_IDENTITY_API) return;
+
         // Only call once when pageData is available
         if (hasCalledApiRef.current) return;
         if (!pageData || Object.keys(pageData).length === 0) return;
