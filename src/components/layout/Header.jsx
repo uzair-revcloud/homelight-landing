@@ -20,7 +20,9 @@ const Header = () => {
       {/* Logo */}
       <div className="flex items-center gap-2 cursor-pointer ml-0 lg:-ml-4">
         <img
-          src={`${import.meta.env.VITE_BRAND_LOGO}`}
+          src={`${import.meta.env.VITE_HEROKU_ASSETS_BASE_PATH}${
+            import.meta.env.VITE_BRAND_LOGO
+          }`}
           className="w-32 md:w-40 lg:w-44"
           alt={strings.company_name}
           width="176"

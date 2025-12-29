@@ -9,7 +9,9 @@ const brandName = import.meta.env.VITE_BRAND_NAME || "Trusted Home Offers";
 document.title = `Sell your house fast with ${brandName}`;
 
 // Set favicon from env variable
-const faviconPath = import.meta.env.VITE_BRAND_FAVICON || "/favicon.png";
+const faviconPath = `${import.meta.env.VITE_HEROKU_ASSETS_BASE_PATH}${
+  import.meta.env.VITE_BRAND_FAVICON
+}`;
 let link = document.querySelector("link[rel='icon']");
 if (link) {
   link.href = faviconPath;
