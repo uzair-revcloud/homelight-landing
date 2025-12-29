@@ -8,7 +8,7 @@ export async function callIdentityAPI({
     overrideAddress = null
 }) {
     // Only call API if enabled via environment variable
-    if (!import.meta.env.VITE_ENABLE_IDENTITY_API) return;
+    if (import.meta.env.VITE_ENABLE_IDENTITY_API !== "true") return;
 
     // Get current pageData from the getter function
     const currentPageData = getPageData ? getPageData() : {};
@@ -123,7 +123,7 @@ export function useIdentityEnrichment({ pageData, setPageData, setDefaultEventPr
 
     useEffect(() => {
         // Only call API if enabled via environment variable
-        if (!import.meta.env.VITE_ENABLE_IDENTITY_API) return;
+        if (import.meta.env.VITE_ENABLE_IDENTITY_API !== "true") return;
 
         // Only call once when pageData is available
         if (hasCalledApiRef.current) return;

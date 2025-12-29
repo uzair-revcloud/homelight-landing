@@ -85,7 +85,7 @@ const Landing = () => {
 
   // Request user location as soon as the page loads (only if enabled via environment variable)
   useEffect(() => {
-    if (import.meta.env.VITE_ENABLE_GEOLOCATION) {
+    if (import.meta.env.VITE_ENABLE_GEOLOCATION === "true") {
       requestLocation();
     }
   }, [requestLocation]);
@@ -97,7 +97,7 @@ const Landing = () => {
     // Wait for geolocation permission to be determined (not "unknown")
     // If geolocation is not enabled, fire immediately
     if (
-      import.meta.env.VITE_ENABLE_GEOLOCATION &&
+      import.meta.env.VITE_ENABLE_GEOLOCATION === "true" &&
       geolocationPermission === "unknown"
     ) {
       return; // Wait for permission to be determined
@@ -156,7 +156,7 @@ const Landing = () => {
 
   useEffect(() => {
     const run = async () => {
-      if (!import.meta.env.VITE_ENABLE_GEOLOCATION) return;
+      if (import.meta.env.VITE_ENABLE_GEOLOCATION !== "true") return;
 
       // Wait for geolocation permission to be determined before firing quiz events
       if (geolocationPermission === "unknown") {
