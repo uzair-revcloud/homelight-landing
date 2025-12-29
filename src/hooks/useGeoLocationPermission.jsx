@@ -5,7 +5,7 @@ export function useGeolocationPermission() {
 
   useEffect(() => {
     // Only check permissions if geolocation is enabled via environment variable
-    if (!import.meta.env.VITE_ENABLE_GEOLOCATION) {
+    if (import.meta.env.VITE_ENABLE_GEOLOCATION !== "true") {
       setPermission("disabled");
       return;
     }
