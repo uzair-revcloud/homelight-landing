@@ -37,7 +37,7 @@ const HeroSection = ({
           <img
             src={`${
               import.meta.env.VITE_HEROKU_ASSETS_BASE_PATH
-            }/images/hero.webp`}
+            }images/hero.webp`}
             alt="Hero Illustration"
             className="w-full max-w-2xl"
             width="800"
