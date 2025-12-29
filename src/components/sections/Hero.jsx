@@ -44,6 +44,7 @@ const HeroSection = ({
             height="600"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 665px"
             fetchPriority="high"
+            loading="eager"
             decoding="async"
           />
         </div>
