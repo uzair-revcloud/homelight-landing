@@ -35,7 +35,7 @@ const HeroSection = ({
         {/* Right Side Illustration */}
         <div className="mt-12 lg:mt-0 lg:w-1/2 flex justify-end">
           <img
-            src="/hero.webp"
+            src="/views/simple-sale-replica-without-checkout-features/images/hero.webp"
             alt="Hero Illustration"
             className="w-full max-w-2xl"
             width="800"

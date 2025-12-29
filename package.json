@@ -1,6 +1,7 @@
 {
   "name": "homelight-landing",
   "private": true,
+  "homepage": "/views/simple-sale-replica-without-checkout-features",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
