@@ -35,9 +35,7 @@ const HeroSection = ({
         {/* Right Side Illustration */}
         <div className="mt-12 lg:mt-0 lg:w-1/2 flex justify-end">
           <img
-            src={`${
-              import.meta.env.VITE_HEROKU_ASSETS_BASE_PATH
-            }images/hero.webp`}
+            src={`https://res.cloudinary.com/df84i4i70/image/upload/f_auto,q_auto,w_1200/hero_zqpora`}
             alt="Hero Illustration"
             className="w-full max-w-2xl"
             width="800"
